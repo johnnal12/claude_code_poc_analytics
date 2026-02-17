@@ -3,6 +3,7 @@ import type {
   DailyAggregate,
   UserAggregate,
   ToolAggregate,
+  ProjectAggregate,
   TimeRange,
   StaticData,
 } from '@/types'
@@ -16,6 +17,7 @@ interface AnalyticsState {
   daily: DailyAggregate[]
   users: UserAggregate[]
   tools: ToolAggregate[]
+  projects: ProjectAggregate[]
   fetchedAt: string | null
   dataDateRange: { start: string; end: string } | null
   _allDaily: DailyAggregate[]
@@ -32,6 +34,7 @@ export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
   daily: [],
   users: [],
   tools: [],
+  projects: [],
   fetchedAt: null,
   dataDateRange: null,
   _allDaily: [],
@@ -68,6 +71,7 @@ export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
         daily: data.daily.slice(-days),
         users: data.users,
         tools: data.tools,
+        projects: data.projects ?? [],
         loading: false,
       })
     } catch (e) {

@@ -143,12 +143,15 @@ export function aggregateByUser(usersByDate: Map<string, UserActivityRecord[]>):
   const byUser = new Map<string, {
     sessions: number; linesAdded: number; linesRemoved: number
     commits: number; pullRequests: number; conversations: number; messages: number
-    totalAccepted: number; totalRejected: number
+    webSearches: number; totalAccepted: number; totalRejected: number
   }>()
 
   for (const records of usersByDate.values()) {
     for (const r of records) {
-      const name = r.user.email_address
+      const name = r.user.email_address.split('@')[0]
+        .split(/[._-]/)
+        .map((p: string) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+        .join(' ')
       const cc = r.claude_code_metrics
       const ta = cc.tool_actions
 
@@ -166,6 +169,7 @@ export function aggregateByUser(usersByDate: Map<string, UserActivityRecord[]>):
         existing.pullRequests += cc.core_metrics.pull_request_count
         existing.conversations += r.chat_metrics.distinct_conversation_count
         existing.messages += r.chat_metrics.message_count
+        existing.webSearches += r.web_search_count
         existing.totalAccepted += accepted
         existing.totalRejected += rejected
       } else {
@@ -177,6 +181,7 @@ export function aggregateByUser(usersByDate: Map<string, UserActivityRecord[]>):
           pullRequests: cc.core_metrics.pull_request_count,
           conversations: r.chat_metrics.distinct_conversation_count,
           messages: r.chat_metrics.message_count,
+          webSearches: r.web_search_count,
           totalAccepted: accepted,
           totalRejected: rejected,
         })
@@ -194,6 +199,7 @@ export function aggregateByUser(usersByDate: Map<string, UserActivityRecord[]>):
       pullRequests: d.pullRequests,
       conversations: d.conversations,
       messages: d.messages,
+      webSearches: d.webSearches,
       acceptanceRate: (d.totalAccepted + d.totalRejected) > 0
         ? (d.totalAccepted / (d.totalAccepted + d.totalRejected)) * 100
         : 0,

@@ -18,6 +18,7 @@ export function UserBreakdown({ data }: Props) {
               <th className="pb-3 pr-4 text-right">Chats</th>
               <th className="pb-3 pr-4 text-right">Lines +/-</th>
               <th className="pb-3 pr-4 text-right">Commits</th>
+              <th className="pb-3 pr-4 text-right">Searches</th>
               <th className="pb-3 pr-5 text-right">Accept %</th>
             </tr>
           </thead>
@@ -46,6 +47,9 @@ export function UserBreakdown({ data }: Props) {
                 </td>
                 <td className="py-3 pr-4 text-right tabular-nums text-gray-600 dark:text-gray-300">
                   {user.commits.toLocaleString()}
+                </td>
+                <td className="py-3 pr-4 text-right tabular-nums text-gray-600 dark:text-gray-300">
+                  {user.webSearches.toLocaleString()}
                 </td>
                 <td className={clsx(
                   'py-3 pr-5 text-right tabular-nums font-medium',

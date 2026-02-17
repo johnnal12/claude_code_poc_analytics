@@ -152,12 +152,20 @@ function aggregateByDay(usersByDate, summaries) {
   return result.sort((a, b) => a.date.localeCompare(b.date))
 }
 
+function emailToName(email) {
+  const local = email.split('@')[0]
+  return local
+    .split(/[._-]/)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(' ')
+}
+
 function aggregateByUser(usersByDate) {
   const byUser = new Map()
 
   for (const records of usersByDate.values()) {
     for (const r of records) {
-      const name = r.user.email_address
+      const name = emailToName(r.user.email_address)
       const cc = r.claude_code_metrics
       const ta = cc.tool_actions
 
@@ -175,6 +183,7 @@ function aggregateByUser(usersByDate) {
         existing.pullRequests += cc.core_metrics.pull_request_count
         existing.conversations += r.chat_metrics.distinct_conversation_count
         existing.messages += r.chat_metrics.message_count
+        existing.webSearches += r.web_search_count
         existing.totalAccepted += accepted
         existing.totalRejected += rejected
       } else {
@@ -186,6 +195,7 @@ function aggregateByUser(usersByDate) {
           pullRequests: cc.core_metrics.pull_request_count,
           conversations: r.chat_metrics.distinct_conversation_count,
           messages: r.chat_metrics.message_count,
+          webSearches: r.web_search_count,
           totalAccepted: accepted,
           totalRejected: rejected,
         })
@@ -203,6 +213,7 @@ function aggregateByUser(usersByDate) {
       pullRequests: d.pullRequests,
       conversations: d.conversations,
       messages: d.messages,
+      webSearches: d.webSearches,
       acceptanceRate: (d.totalAccepted + d.totalRejected) > 0
         ? (d.totalAccepted / (d.totalAccepted + d.totalRejected)) * 100
         : 0,
@@ -237,6 +248,44 @@ function aggregateTools(usersByDate) {
     .filter((t) => t.accepted + t.rejected > 0)
 }
 
+// --- Projects ---
+
+async function fetchProjects(dates) {
+  const byProject = new Map()
+
+  // Fetch in batches of 5
+  for (let i = 0; i < dates.length; i += 5) {
+    const batch = dates.slice(i, i + 5)
+    const results = await Promise.all(
+      batch.map(async (date) => {
+        const records = await fetchAllPages(`${BASE}/projects?date=${date}`)
+        return records
+      }),
+    )
+    for (const records of results) {
+      for (const r of records) {
+        const name = r.project_name
+        const existing = byProject.get(name)
+        if (existing) {
+          existing.users = Math.max(existing.users, r.distinct_user_count)
+          existing.conversations += r.conversation_count
+          existing.messages += r.message_count
+        } else {
+          byProject.set(name, {
+            users: r.distinct_user_count,
+            conversations: r.conversation_count,
+            messages: r.message_count,
+          })
+        }
+      }
+    }
+  }
+
+  return Array.from(byProject.entries())
+    .map(([name, d]) => ({ name, ...d }))
+    .sort((a, b) => b.conversations - a.conversations)
+}
+
 // --- Main ---
 
 async function main() {
@@ -258,12 +307,22 @@ async function main() {
   const users = aggregateByUser(usersByDate)
   const tools = aggregateTools(usersByDate)
 
+  let projects = []
+  try {
+    console.log('Fetching projects...')
+    projects = await fetchProjects(dates)
+    console.log(`Fetched ${projects.length} projects`)
+  } catch (err) {
+    console.warn(`Skipping projects: ${err.message}`)
+  }
+
   const output = {
     fetchedAt: new Date().toISOString(),
     dateRange: { start: startDate, end: endDate },
     daily,
     users,
     tools,
+    projects,
   }
 
   mkdirSync(dirname(OUTPUT), { recursive: true })

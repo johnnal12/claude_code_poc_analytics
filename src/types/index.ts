@@ -106,6 +106,7 @@ export interface UserAggregate {
   pullRequests: number
   conversations: number
   messages: number
+  webSearches: number
   acceptanceRate: number
 }
 
@@ -113,6 +114,13 @@ export interface ToolAggregate {
   tool: string
   accepted: number
   rejected: number
+}
+
+export interface ProjectAggregate {
+  name: string
+  users: number
+  conversations: number
+  messages: number
 }
 
 export type TimeRange = '7d' | '14d' | '30d'
@@ -123,4 +131,5 @@ export interface StaticData {
   daily: DailyAggregate[]
   users: UserAggregate[]
   tools: ToolAggregate[]
+  projects: ProjectAggregate[]
 }

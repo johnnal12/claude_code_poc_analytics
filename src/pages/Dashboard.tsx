@@ -7,6 +7,7 @@ import { LinesOfCodeChart } from '@/components/charts/LatencyChart'
 import { ToolAcceptanceChart } from '@/components/charts/ErrorRateChart'
 import { ActiveUsersChart } from '@/components/charts/CostBreakdownChart'
 import { UserBreakdown } from '@/components/charts/EndpointBreakdown'
+import { ProjectsChart } from '@/components/charts/ProjectsChart'
 import { useAnalyticsStore } from '@/stores/analyticsStore'
 import type { TimeRange } from '@/types'
 
@@ -33,7 +34,7 @@ function formatTimestamp(iso: string): string {
 }
 
 export function Dashboard() {
-  const { range, setRange, fetch: fetchData, loading, error, daily, users, tools, fetchedAt, dataDateRange } =
+  const { range, setRange, fetch: fetchData, loading, error, daily, users, tools, projects, fetchedAt, dataDateRange } =
     useAnalyticsStore()
 
   useEffect(() => {
@@ -145,6 +146,10 @@ export function Dashboard() {
             <ToolAcceptanceChart data={tools} />
             <ActiveUsersChart data={daily} />
           </div>
+
+          {projects.length > 0 && (
+            <ProjectsChart data={projects} />
+          )}
 
           <UserBreakdown data={users} />
         </>
