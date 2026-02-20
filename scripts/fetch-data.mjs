@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Fetches 30 days of Anthropic Enterprise Analytics data and writes public/data.json.
+// Fetches Anthropic Enterprise Analytics data from Feb 1 2026 to T-2 days and writes public/data.json.
 // Usage: CLAUDE_API_KEY=sk-... node scripts/fetch-data.mjs
 
 import { writeFileSync, mkdirSync } from 'node:fs'
@@ -25,17 +25,19 @@ const HEADERS = {
 // --- Date helpers ---
 
 function formatDate(d) {
-  return d.toISOString().split('T')[0]
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
 }
 
-function getDateRange(days) {
+function getDateRange() {
   const dates = []
-  const now = new Date()
-  // API requires date before today, so start from yesterday
-  for (let i = days; i >= 1; i--) {
-    const d = new Date(now)
-    d.setDate(d.getDate() - i)
-    dates.push(formatDate(d))
+  const start = new Date(2026, 1, 1) // Feb 1 2026 local time
+  const end = new Date()
+  end.setDate(end.getDate() - 2) // T-2: API data unavailable for last 2 days
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    dates.push(formatDate(new Date(d)))
   }
   return dates
 }
@@ -289,12 +291,11 @@ async function fetchProjects(dates) {
 // --- Main ---
 
 async function main() {
-  const DAYS = 30
-  const dates = getDateRange(DAYS)
+  const dates = getDateRange()
   const startDate = dates[0]
   const endDate = dates[dates.length - 1]
 
-  console.log(`Fetching ${DAYS} days of data (${startDate} to ${endDate})...`)
+  console.log(`Fetching ${dates.length} days of data (${startDate} to ${endDate})...`)
 
   const [usersByDate, summaries] = await Promise.all([
     fetchUsers(dates),
