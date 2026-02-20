@@ -35,7 +35,7 @@ function getDateRange() {
   const dates = []
   const start = new Date(2026, 1, 1) // Feb 1 2026 local time
   const end = new Date()
-  end.setDate(end.getDate() - 2) // T-2: API data unavailable for last 2 days
+  end.setDate(end.getDate() - 3) // T-3: API requires dates at least 3 days ago
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     dates.push(formatDate(new Date(d)))
   }
