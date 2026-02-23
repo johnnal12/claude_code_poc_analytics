@@ -134,7 +134,7 @@ export interface UserDailyRecord {
   webSearches: number
 }
 
-export type TimeRange = '7d' | '14d' | '30d'
+export type TimeRange = '7d' | '14d' | '30d' | 'mtd'
 
 export interface StaticData {
   fetchedAt: string

@@ -13,6 +13,7 @@ import { useAnalyticsStore } from '@/stores/analyticsStore'
 import type { TimeRange } from '@/types'
 
 const ranges: { value: TimeRange; label: string }[] = [
+  { value: 'mtd', label: 'MTD' },
   { value: '7d', label: '7 days' },
   { value: '14d', label: '14 days' },
   { value: '30d', label: '30 days' },

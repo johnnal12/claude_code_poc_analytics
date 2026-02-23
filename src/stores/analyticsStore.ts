@@ -9,7 +9,30 @@ import type {
   StaticData,
 } from '@/types'
 
-const rangeDays: Record<TimeRange, number> = { '7d': 7, '14d': 14, '30d': 30 }
+const rangeDays: Record<Exclude<TimeRange, 'mtd'>, number> = { '7d': 7, '14d': 14, '30d': 30 }
+
+function mtdPrefix(): string {
+  const now = new Date()
+  const y = now.getFullYear()
+  const m = String(now.getMonth() + 1).padStart(2, '0')
+  return `${y}-${m}-`
+}
+
+function sliceByRange<T extends { date: string }>(all: T[], range: TimeRange): T[] {
+  if (range === 'mtd') {
+    const prefix = mtdPrefix()
+    return all.filter((d) => d.date >= prefix)
+  }
+  return all.slice(-rangeDays[range])
+}
+
+function sliceUserDaily(all: Record<string, UserDailyRecord[]>, range: TimeRange): Record<string, UserDailyRecord[]> {
+  const result: Record<string, UserDailyRecord[]> = {}
+  for (const [name, records] of Object.entries(all)) {
+    result[name] = sliceByRange(records, range)
+  }
+  return result
+}
 
 interface AnalyticsState {
   range: TimeRange
@@ -33,7 +56,7 @@ interface AnalyticsState {
 }
 
 export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
-  range: '30d',
+  range: 'mtd',
   loading: false,
   error: null,
   daily: [],
@@ -51,18 +74,12 @@ export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
 
   setRange: (range: TimeRange) => {
     const { _allDaily, _allUsers, _allTools, _allUserDaily } = get()
-    const days = rangeDays[range]
-    // Slice userDaily per-user arrays to match the range
-    const sliced: Record<string, UserDailyRecord[]> = {}
-    for (const [name, records] of Object.entries(_allUserDaily)) {
-      sliced[name] = records.slice(-days)
-    }
     set({
       range,
-      daily: _allDaily.slice(-days),
+      daily: sliceByRange(_allDaily, range),
       users: _allUsers,
       tools: _allTools,
-      userDaily: sliced,
+      userDaily: sliceUserDaily(_allUserDaily, range),
     })
   },
 
@@ -78,12 +95,8 @@ export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
       if (!res.ok) throw new Error(`Failed to load data: ${res.status}`)
 
       const data: StaticData = await res.json()
-      const days = rangeDays[get().range]
+      const range = get().range
       const allUserDaily = data.userDaily ?? {}
-      const sliced: Record<string, UserDailyRecord[]> = {}
-      for (const [name, records] of Object.entries(allUserDaily)) {
-        sliced[name] = records.slice(-days)
-      }
 
       set({
         fetchedAt: data.fetchedAt,
@@ -92,11 +105,11 @@ export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
         _allUsers: data.users,
         _allTools: data.tools,
         _allUserDaily: allUserDaily,
-        daily: data.daily.slice(-days),
+        daily: sliceByRange(data.daily, range),
         users: data.users,
         tools: data.tools,
         projects: data.projects ?? [],
-        userDaily: sliced,
+        userDaily: sliceUserDaily(allUserDaily, range),
         loading: false,
       })
     } catch (e) {
