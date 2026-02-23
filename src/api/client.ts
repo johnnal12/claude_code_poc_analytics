@@ -204,7 +204,7 @@ export function aggregateByUser(usersByDate: Map<string, UserActivityRecord[]>):
         ? (d.totalAccepted / (d.totalAccepted + d.totalRejected)) * 100
         : 0,
     }))
-    .sort((a, b) => b.sessions - a.sessions)
+    .sort((a, b) => b.linesAdded - a.linesAdded)
 }
 
 export function aggregateTools(usersByDate: Map<string, UserActivityRecord[]>): ToolAggregate[] {

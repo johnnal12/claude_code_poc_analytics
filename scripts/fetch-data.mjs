@@ -222,7 +222,7 @@ function aggregateByUser(usersByDate) {
         ? (d.totalAccepted / (d.totalAccepted + d.totalRejected)) * 100
         : 0,
     }))
-    .sort((a, b) => b.sessions - a.sessions)
+    .sort((a, b) => b.linesAdded - a.linesAdded)
 }
 
 function aggregateTools(usersByDate) {
