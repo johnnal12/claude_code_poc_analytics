@@ -33,7 +33,7 @@ interface AnalyticsState {
 }
 
 export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
-  range: '7d',
+  range: '30d',
   loading: false,
   error: null,
   daily: [],
