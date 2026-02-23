@@ -156,6 +156,10 @@ function aggregateByDay(usersByDate, summaries) {
   return result.sort((a, b) => a.date.localeCompare(b.date))
 }
 
+function shouldSkipUser(email) {
+  return !email || email.endsWith('@gmail.com') || !email.split('@')[0].trim()
+}
+
 function emailToName(email) {
   const local = email.split('@')[0]
   return local
@@ -169,7 +173,9 @@ function aggregateByUser(usersByDate) {
 
   for (const records of usersByDate.values()) {
     for (const r of records) {
+      if (shouldSkipUser(r.user.email_address)) continue
       const name = emailToName(r.user.email_address)
+      if (!name) continue
       const cc = r.claude_code_metrics
       const ta = cc.tool_actions
 
@@ -296,7 +302,9 @@ function aggregateByUserDaily(usersByDate) {
 
   for (const [date, records] of usersByDate) {
     for (const r of records) {
+      if (shouldSkipUser(r.user.email_address)) continue
       const name = emailToName(r.user.email_address)
+      if (!name) continue
       const cc = r.claude_code_metrics
 
       const entry = {
