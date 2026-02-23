@@ -67,7 +67,7 @@ export function UserBreakdown({ data, onUserClick }: Props) {
                         ? 'text-stone-300 dark:text-stone-600'
                         : 'text-rose-600 dark:text-rose-400',
                 )}>
-                  {user.acceptanceRate > 0 ? `${Math.round(user.acceptanceRate)}%` : '\u2014'}
+                  {user.acceptanceRate > 0 ? `${user.acceptanceRate.toFixed(1)}%` : '\u2014'}
                 </td>
               </tr>
             ))}
