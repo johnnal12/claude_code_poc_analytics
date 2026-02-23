@@ -5,22 +5,54 @@
 @layer base {
   :root {
     --tooltip-bg: #ffffff;
-    --tooltip-border: #e5e7eb;
-    --tooltip-text: #1f2937;
+    --tooltip-border: #E7E0D6;
+    --tooltip-text: #2C2418;
   }
 
   .dark {
-    --tooltip-bg: #1f2937;
-    --tooltip-border: #374151;
-    --tooltip-text: #f3f4f6;
+    --tooltip-bg: #201C17;
+    --tooltip-border: #302B25;
+    --tooltip-text: #E8E2D8;
   }
 
   body {
-    @apply bg-stone-50 text-gray-900 antialiased;
+    @apply bg-warm-50 text-stone-800 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04';
   }
 
   .dark body,
   body.dark-body {
-    @apply bg-gray-950 text-gray-100;
+    @apply bg-warm-950 text-stone-200;
   }
+}
+
+/* Data numbers */
+.font-data {
+  font-feature-settings: 'tnum';
+  letter-spacing: -0.03em;
+}
+
+/* Serif display for big numbers */
+.stat-display {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 113, 108, 0.2);
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(168, 162, 158, 0.15);
 }

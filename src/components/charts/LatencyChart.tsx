@@ -31,11 +31,11 @@ export function LinesOfCodeChart({ data }: Props) {
                 <stop offset="100%" stopColor="#f43f5e" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200/60 dark:stroke-gray-800/60" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" className="stroke-warm-200/60 dark:stroke-warm-800/60" vertical={false} />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 11 }}
-              className="text-gray-400"
+              className="text-stone-400"
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: string) => {
@@ -45,7 +45,7 @@ export function LinesOfCodeChart({ data }: Props) {
             />
             <YAxis
               tick={{ fontSize: 11 }}
-              className="text-gray-400"
+              className="text-stone-400"
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: number) => v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v)}

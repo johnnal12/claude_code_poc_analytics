@@ -8,6 +8,7 @@ import { ToolAcceptanceChart } from '@/components/charts/ErrorRateChart'
 import { ActiveUsersChart } from '@/components/charts/CostBreakdownChart'
 import { UserBreakdown } from '@/components/charts/EndpointBreakdown'
 import { ProjectsChart } from '@/components/charts/ProjectsChart'
+import { UserDetailModal } from '@/components/UserDetailModal'
 import { useAnalyticsStore } from '@/stores/analyticsStore'
 import type { TimeRange } from '@/types'
 
@@ -34,7 +35,7 @@ function formatTimestamp(iso: string): string {
 }
 
 export function Dashboard() {
-  const { range, setRange, fetch: fetchData, loading, error, daily, users, tools, projects, fetchedAt, dataDateRange } =
+  const { range, setRange, fetch: fetchData, loading, error, daily, users, tools, projects, userDaily, selectedUser, setSelectedUser, fetchedAt, dataDateRange } =
     useAnalyticsStore()
 
   useEffect(() => {
@@ -64,22 +65,22 @@ export function Dashboard() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-50">Analytics</h1>
-          <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+          <h1 className="font-serif text-2xl font-bold text-stone-800 dark:text-stone-50">Analytics</h1>
+          <p className="mt-0.5 text-sm text-stone-500 dark:text-stone-400">
             Claude usage across your organization
           </p>
           {dataDateRange && (
-            <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+            <p className="mt-1 text-xs text-stone-400 dark:text-stone-500">
               {formatDateLabel(dataDateRange.start)} &ndash; {formatDateLabel(dataDateRange.end)}
               {fetchedAt && (
-                <span className="ml-1.5 inline-flex items-center rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                <span className="ml-1.5 inline-flex items-center rounded-full bg-warm-100 px-2 py-0.5 text-[10px] font-medium text-stone-500 dark:bg-warm-800 dark:text-stone-400">
                   Updated {formatTimestamp(fetchedAt)}
                 </span>
               )}
             </p>
           )}
         </div>
-        <div className="flex gap-0.5 rounded-xl bg-stone-100 p-1 dark:bg-gray-800">
+        <div className="flex gap-0.5 rounded-xl bg-warm-100 p-1 dark:bg-warm-800">
           {ranges.map((r) => (
             <button
               key={r.value}
@@ -87,8 +88,8 @@ export function Dashboard() {
               className={clsx(
                 'rounded-lg px-3 py-1.5 text-xs font-medium transition-all',
                 range === r.value
-                  ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-gray-100'
-                  : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200',
+                  ? 'bg-white text-stone-800 shadow-sm dark:bg-warm-700 dark:text-stone-100'
+                  : 'text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200',
               )}
             >
               {r.label}
@@ -98,7 +99,7 @@ export function Dashboard() {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-800/60 dark:bg-red-950/30 dark:text-red-200">
+        <div className="flex items-center gap-2 rounded-xl border border-red-200/80 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-200">
           <AlertCircle className="h-4 w-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -106,7 +107,7 @@ export function Dashboard() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-analytics-500 border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-terra-500 border-t-transparent" />
         </div>
       ) : (
         <>
@@ -151,9 +152,21 @@ export function Dashboard() {
             <ProjectsChart data={projects} />
           )}
 
-          <UserBreakdown data={users} />
+          <UserBreakdown data={users} onUserClick={setSelectedUser} />
         </>
       )}
+
+      {selectedUser && (() => {
+        const userAgg = users.find((u) => u.name === selectedUser)
+        if (!userAgg) return null
+        return (
+          <UserDetailModal
+            user={userAgg}
+            daily={userDaily[selectedUser] ?? []}
+            onClose={() => setSelectedUser(null)}
+          />
+        )
+      })()}
     </div>
   )
 }

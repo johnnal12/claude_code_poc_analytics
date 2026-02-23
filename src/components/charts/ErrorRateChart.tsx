@@ -21,9 +21,9 @@ export function ToolAcceptanceChart({ data }: Props) {
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 4, right: 4, left: -10, bottom: 0 }} barGap={2}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200/60 dark:stroke-gray-800/60" vertical={false} />
-            <XAxis dataKey="tool" tick={{ fontSize: 11 }} className="text-gray-400" tickLine={false} axisLine={false} />
-            <YAxis tick={{ fontSize: 11 }} className="text-gray-400" tickLine={false} axisLine={false} />
+            <CartesianGrid strokeDasharray="3 3" className="stroke-warm-200/60 dark:stroke-warm-800/60" vertical={false} />
+            <XAxis dataKey="tool" tick={{ fontSize: 11 }} className="text-stone-400" tickLine={false} axisLine={false} />
+            <YAxis tick={{ fontSize: 11 }} className="text-stone-400" tickLine={false} axisLine={false} />
             <Tooltip
               contentStyle={tooltipStyle}
               formatter={(value: number, name: string) => [value.toLocaleString(), name]}

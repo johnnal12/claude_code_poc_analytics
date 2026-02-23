@@ -31,11 +31,11 @@ export function ActivityChart({ data }: Props) {
                 <stop offset="100%" stopColor="#a78bfa" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200/60 dark:stroke-gray-800/60" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" className="stroke-warm-200/60 dark:stroke-warm-800/60" vertical={false} />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 11 }}
-              className="text-gray-400"
+              className="text-stone-400"
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: string) => {
@@ -43,7 +43,7 @@ export function ActivityChart({ data }: Props) {
                 return `${d.getMonth() + 1}/${d.getDate()}`
               }}
             />
-            <YAxis tick={{ fontSize: 11 }} className="text-gray-400" tickLine={false} axisLine={false} />
+            <YAxis tick={{ fontSize: 11 }} className="text-stone-400" tickLine={false} axisLine={false} />
             <Tooltip
               contentStyle={tooltipStyle}
               labelFormatter={(v: string) => new Date(v + 'T00:00:00').toLocaleDateString()}

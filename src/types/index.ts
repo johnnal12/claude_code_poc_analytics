@@ -123,6 +123,17 @@ export interface ProjectAggregate {
   messages: number
 }
 
+export interface UserDailyRecord {
+  date: string
+  sessions: number
+  linesAdded: number
+  linesRemoved: number
+  commits: number
+  conversations: number
+  messages: number
+  webSearches: number
+}
+
 export type TimeRange = '7d' | '14d' | '30d'
 
 export interface StaticData {
@@ -132,4 +143,5 @@ export interface StaticData {
   users: UserAggregate[]
   tools: ToolAggregate[]
   projects: ProjectAggregate[]
+  userDaily?: Record<string, UserDailyRecord[]>
 }

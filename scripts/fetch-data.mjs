@@ -31,8 +31,8 @@ function formatDate(d) {
 function getDateRange(days) {
   const dates = []
   const now = new Date()
-  // API requires date before today, so start from yesterday
-  for (let i = days; i >= 1; i--) {
+  // Try up to 2 days ago, gracefully skip dates the API rejects
+  for (let i = days + 1; i >= 2; i--) {
     const d = new Date(now)
     d.setDate(d.getDate() - i)
     dates.push(formatDate(d))
@@ -69,17 +69,21 @@ async function fetchAllPages(url) {
 async function fetchUsers(dates) {
   const byDate = new Map()
 
-  // Fetch in batches of 5
+  // Fetch in batches of 5, skip dates the API rejects
   for (let i = 0; i < dates.length; i += 5) {
     const batch = dates.slice(i, i + 5)
-    const results = await Promise.all(
+    const results = await Promise.allSettled(
       batch.map(async (date) => {
         const records = await fetchAllPages(`${BASE}/users?date=${date}`)
         return { date, records }
       }),
     )
-    for (const { date, records } of results) {
-      byDate.set(date, records)
+    for (const r of results) {
+      if (r.status === 'fulfilled') {
+        byDate.set(r.value.date, r.value.records)
+      } else {
+        console.warn(`Skipping date: ${r.reason.message.slice(0, 80)}`)
+      }
     }
   }
 
@@ -286,10 +290,43 @@ async function fetchProjects(dates) {
     .sort((a, b) => b.conversations - a.conversations)
 }
 
+function aggregateByUserDaily(usersByDate) {
+  // Build per-user per-day records: { "John Albesa": [{ date, sessions, ... }, ...] }
+  const result = {}
+
+  for (const [date, records] of usersByDate) {
+    for (const r of records) {
+      const name = emailToName(r.user.email_address)
+      const cc = r.claude_code_metrics
+
+      const entry = {
+        date,
+        sessions: cc.core_metrics.distinct_session_count,
+        linesAdded: cc.core_metrics.lines_of_code.added_count,
+        linesRemoved: cc.core_metrics.lines_of_code.removed_count,
+        commits: cc.core_metrics.commit_count,
+        conversations: r.chat_metrics.distinct_conversation_count,
+        messages: r.chat_metrics.message_count,
+        webSearches: r.web_search_count,
+      }
+
+      if (!result[name]) result[name] = []
+      result[name].push(entry)
+    }
+  }
+
+  // Sort each user's entries by date
+  for (const records of Object.values(result)) {
+    records.sort((a, b) => a.date.localeCompare(b.date))
+  }
+
+  return result
+}
+
 // --- Main ---
 
 async function main() {
-  const DAYS = 30
+  const DAYS = 31
   const dates = getDateRange(DAYS)
   const startDate = dates[0]
   const endDate = dates[dates.length - 1]
@@ -306,6 +343,7 @@ async function main() {
   const daily = aggregateByDay(usersByDate, summaries)
   const users = aggregateByUser(usersByDate)
   const tools = aggregateTools(usersByDate)
+  const userDaily = aggregateByUserDaily(usersByDate)
 
   let projects = []
   try {
@@ -323,6 +361,7 @@ async function main() {
     users,
     tools,
     projects,
+    userDaily,
   }
 
   mkdirSync(dirname(OUTPUT), { recursive: true })

@@ -10,13 +10,13 @@ export function Card({ title, children, className }: CardProps) {
   return (
     <div
       className={clsx(
-        'rounded-2xl border border-stone-200/60 bg-white p-5 shadow-sm',
-        'dark:border-gray-800/60 dark:bg-gray-900',
+        'rounded-2xl bg-white p-6 shadow-sm shadow-stone-900/[0.04]',
+        'dark:bg-warm-900/80 dark:shadow-none dark:ring-1 dark:ring-white/[0.04]',
         className,
       )}
     >
       {title && (
-        <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+        <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-stone-400 dark:text-stone-500">
           {title}
         </h3>
       )}
