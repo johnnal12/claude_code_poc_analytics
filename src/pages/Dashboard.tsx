@@ -40,8 +40,8 @@ export function Dashboard() {
     useAnalyticsStore()
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    if (daily.length === 0 && !loading && !error) fetchData()
+  }, [fetchData, daily.length, loading, error])
 
   const stats = useMemo(() => {
     const totalSessions = daily.reduce((s, d) => s + d.sessions, 0)
