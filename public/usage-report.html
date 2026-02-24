@@ -487,6 +487,44 @@
   .hm-cell.i-4 { background: rgba(59,130,246,0.35); color: #fff; }
   .hm-cell.i-5 { background: rgba(59,130,246,0.55); color: #fff; font-weight: 700; }
 
+  .hm-cell.no-seat {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--warm-100),
+      var(--warm-100) 2px,
+      transparent 2px,
+      transparent 5px
+    );
+    color: transparent;
+  }
+
+  .hm-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 6px;
+  }
+
+  .hm-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--warm-200);
+  }
+
+  .hm-divider-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 2px 10px;
+    border-radius: 9999px;
+  }
+
+  .hm-divider-in .hm-divider-label { color: #0284c7; background: rgba(14,165,233,0.08); }
+  .hm-divider-out .hm-divider-label { color: #b45309; background: rgba(217,119,6,0.08); }
+
   .heatmap-legend {
     display: flex;
     align-items: center;
@@ -667,15 +705,24 @@
     </div>
   </div>
 
-  <!-- SEAT ROTATION SUMMARY -->
-  <div class="section" id="rotationSection"></div>
-
   <!-- STAT CARDS -->
   <div class="stats-grid" id="statsGrid"></div>
 
-  <!-- ALERTS -->
-  <div class="section">
+  <!-- ROSTER CHANGES -->
+  <div class="section" style="margin-top:32px;padding-top:28px;border-top:1px solid var(--warm-200);">
+    <h2 style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#292524;letter-spacing:-0.02em;margin-bottom:16px;">Roster Changes</h2>
+    <div id="rotationSection"></div>
+  </div>
+
+  <!-- ADOPTION CONCERNS -->
+  <div class="section" style="margin-top:32px;padding-top:28px;border-top:1px solid var(--warm-200);">
+    <h2 style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#292524;letter-spacing:-0.02em;margin-bottom:16px;">Adoption Concerns</h2>
     <div class="grid-2" id="alertsGrid"></div>
+  </div>
+
+  <!-- USAGE DATA -->
+  <div style="margin-top:32px;padding-top:28px;border-top:1px solid var(--warm-200);">
+    <h2 style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#292524;letter-spacing:-0.02em;margin-bottom:20px;">Usage Data</h2>
   </div>
 
   <!-- BAR CHART -->
@@ -797,6 +844,7 @@ const DAILY = {
   "Christopher X Walker":{19:4},
   "Kunal T Vakil":{18:0},
   "Sunil J Punnoose":{20:3,21:7,22:10,23:3},
+  "Srikanth Geedipalli":{20:4,22:5,23:3},
   "Kalyana C Bedhu":{22:5,23:4},
   "Mingxin Chuai":{17:2},
 };
@@ -907,19 +955,11 @@ function renderRotation() {
 
 // ─── STATS ───
 function renderStats() {
-  const current = USERS.filter(u => !u.rotatedOut);
-  const totalSessions = current.reduce((s,u) => s + u.sessions, 0);
-  const totalAdded = current.reduce((s,u) => s + u.added, 0);
-  const totalRemoved = current.reduce((s,u) => s + u.removed, 0);
-  const totalCommits = current.reduce((s,u) => s + u.commits, 0);
-  const rosterUsers = USERS.filter(u => !u.rotatedOut);
-  const activeUsers = rosterUsers.filter(u => u.sessions > 0).length;
-
   const cards = [
-    { label:"Code Sessions", value:fmt(totalSessions), accent:"var(--blue-500)", iconBg:"#eff6ff", iconColor:"var(--blue-600)", icon:'<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="12" y2="5"/>' },
-    { label:"Lines Changed", value:fmt(totalAdded + totalRemoved), accent:"var(--emerald-500)", iconBg:"#ecfdf5", iconColor:"var(--emerald-600)", icon:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
-    { label:"Commits", value:fmt(totalCommits), accent:"var(--amber-500)", iconBg:"#fffbeb", iconColor:"var(--amber-600)", icon:'<circle cx="12" cy="12" r="4"/><line x1="1.05" y1="12" x2="7" y2="12"/><line x1="17.01" y1="12" x2="22.96" y2="12"/>' },
-    { label:"Active Users", value:activeUsers + " / " + rosterUsers.length, accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+    { label:"Code Sessions", value:"1,665", accent:"var(--blue-500)", iconBg:"#eff6ff", iconColor:"var(--blue-600)", icon:'<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="12" y2="5"/>' },
+    { label:"Lines Changed", value:"911,319", accent:"var(--emerald-500)", iconBg:"#ecfdf5", iconColor:"var(--emerald-600)", icon:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
+    { label:"Commits", value:"409", accent:"var(--amber-500)", iconBg:"#fffbeb", iconColor:"var(--amber-600)", icon:'<circle cx="12" cy="12" r="4"/><line x1="1.05" y1="12" x2="7" y2="12"/><line x1="17.01" y1="12" x2="22.96" y2="12"/>' },
+    { label:"Active Users", value:"24 / 33", accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
   ];
 
   clearAppend(document.getElementById('statsGrid'), ...cards.map(c => {
@@ -996,6 +1036,8 @@ function renderBarChart() {
 }
 
 // ─── HEATMAP ───
+const ROTATION_DAY = 19; // Thu Feb 19
+
 function renderHeatmap() {
   const days = [
     { d:17, label:"Tue 17", we:false }, { d:18, label:"Wed 18", we:false },
@@ -1013,23 +1055,50 @@ function renderHeatmap() {
     return r < 0.08 ? 1 : r < 0.2 ? 2 : r < 0.4 ? 3 : r < 0.7 ? 4 : 5;
   }
 
-  const sorted = [...USERS].filter(u => !u.rotatedOut).sort((a,b) => b.sessions - a.sessions);
+  const continuing = USERS.filter(u => !u.rotatedOut && !u.recentlyAdded).sort((a,b) => b.sessions - a.sessions);
+  const rotIn = USERS.filter(u => u.recentlyAdded).sort((a,b) => b.sessions - a.sessions);
+  const rotOut = USERS.filter(u => u.rotatedOut).sort((a,b) => b.sessions - a.sessions);
+
   const grid = document.getElementById('heatmap');
   grid.textContent = '';
 
+  // Header row
   grid.appendChild(el('div', { cls: 'hm-header' }));
   for (const d of days) grid.appendChild(el('div', { cls: 'hm-header' + (d.we ? ' weekend' : ''), text: d.label }));
 
-  for (const u of sorted) {
+  function addUserRow(u, noSeatBefore, noSeatAfter) {
     const daily = DAILY[u.name] || {};
     grid.appendChild(el('div', { cls: 'hm-name', text: u.name }));
     for (const d of days) {
-      const val = daily[d.d] || 0;
-      const i = u.days === 0 ? 0 : intensity(val);
-      const txt = val > 0 ? String(val) : (u.dates.includes(d.d) ? '0' : '\u2013');
-      grid.appendChild(el('div', { cls: 'hm-cell i-' + i, text: txt }));
+      if ((noSeatBefore && d.d < ROTATION_DAY) || (noSeatAfter && d.d >= ROTATION_DAY)) {
+        grid.appendChild(el('div', { cls: 'hm-cell no-seat' }));
+      } else {
+        const val = daily[d.d] || 0;
+        const i = u.days === 0 ? 0 : intensity(val);
+        const txt = val > 0 ? String(val) : (u.dates.includes(d.d) ? '0' : '\u2013');
+        grid.appendChild(el('div', { cls: 'hm-cell i-' + i, text: txt }));
+      }
     }
   }
+
+  function addDivider(label, cls) {
+    const div = el('div', { cls: 'hm-divider ' + cls });
+    div.appendChild(el('div', { cls: 'hm-divider-line' }));
+    div.appendChild(el('span', { cls: 'hm-divider-label', text: label }));
+    div.appendChild(el('div', { cls: 'hm-divider-line' }));
+    grid.appendChild(div);
+  }
+
+  // Continuing users
+  for (const u of continuing) addUserRow(u, false, false);
+
+  // Rotated in
+  addDivider('Rotated In \u2014 Thu 19', 'hm-divider-in');
+  for (const u of rotIn) addUserRow(u, true, false);
+
+  // Rotated out
+  addDivider('Rotated Out \u2014 Thu 19', 'hm-divider-out');
+  for (const u of rotOut) addUserRow(u, false, true);
 }
 
 // ─── SCHEDULE ───
