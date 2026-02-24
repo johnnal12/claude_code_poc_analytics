@@ -691,7 +691,7 @@ const DAILY = {
   "Kunal T Vakil":{18:0},
 };
 
-const WEEKDAYS = [17,18,19,20,21], WEEKENDS = [22,23];
+const WEEKDAYS = [17,18,19,20,23], WEEKENDS = [21,22];
 function fmt(n) { return n.toLocaleString(); }
 
 function el(tag, attrs, ...children) {
@@ -806,10 +806,10 @@ function renderBarChart() {
 // ─── HEATMAP ───
 function renderHeatmap() {
   const days = [
-    { d:17, label:"Mon 17", we:false }, { d:18, label:"Tue 18", we:false },
-    { d:19, label:"Wed 19", we:false }, { d:20, label:"Thu 20", we:false },
-    { d:21, label:"Fri 21", we:false }, { d:22, label:"Sat 22", we:true },
-    { d:23, label:"Sun 23", we:true },
+    { d:17, label:"Tue 17", we:false }, { d:18, label:"Wed 18", we:false },
+    { d:19, label:"Thu 19", we:false }, { d:20, label:"Fri 20", we:false },
+    { d:21, label:"Sat 21", we:true }, { d:22, label:"Sun 22", we:true },
+    { d:23, label:"Mon 23", we:false },
   ];
 
   let maxS = 0;
