@@ -353,6 +353,26 @@
   .row-inactive td { opacity: 0.4; }
   .row-inactive td.user-cell { opacity: 1; color: var(--rose-600); }
   .row-low td.user-cell { color: var(--amber-600); }
+  .row-rotated td { opacity: 0.35; }
+  .row-rotated td.user-cell { opacity: 1; color: #78716c; }
+  .row-new-inactive td { opacity: 0.45; }
+  .row-new-inactive td.user-cell { opacity: 1; }
+
+  .user-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 1px 6px;
+    border-radius: 9999px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  .badge-new { background: rgba(14,165,233,0.1); color: #0284c7; }
+  .badge-inactive { background: rgba(120,113,108,0.1); color: #78716c; }
+  .badge-rotated { background: rgba(217,119,6,0.1); color: #b45309; }
 
   .lines-added { color: var(--emerald-600); }
   .lines-removed { color: var(--rose-500); }
@@ -537,6 +557,82 @@
     .bar-row { grid-template-columns: 120px 1fr 45px; }
   }
 
+  /* ─── ROTATION SUMMARY ─── */
+  .rotation-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .rotation-card {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    overflow: hidden;
+  }
+
+  .rotation-header {
+    padding: 16px 24px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rotation-header .rot-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rotation-header .rot-icon svg { width: 14px; height: 14px; }
+
+  .rotation-header .rot-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .rotation-header .rot-count {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 9999px;
+    font-feature-settings: 'tnum';
+  }
+
+  .rot-in .rot-icon { background: rgba(14,165,233,0.1); color: #0284c7; }
+  .rot-in .rot-title { color: #0284c7; }
+  .rot-in .rot-count { background: rgba(14,165,233,0.1); color: #0284c7; }
+
+  .rot-out .rot-icon { background: rgba(217,119,6,0.1); color: #b45309; }
+  .rot-out .rot-title { color: #b45309; }
+  .rot-out .rot-count { background: rgba(217,119,6,0.1); color: #b45309; }
+
+  .rotation-card table { font-size: 13px; }
+  .rotation-card th { font-size: 10px; padding: 0 16px 8px; }
+  .rotation-card td { padding: 8px 16px; }
+  .rotation-card th:first-child, .rotation-card td:first-child { padding-left: 24px; }
+  .rotation-card th:last-child, .rotation-card td:last-child { padding-right: 24px; }
+
+  .rot-status {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+  }
+
+  .rot-status-active { background: rgba(5,150,105,0.08); color: var(--emerald-600); }
+  .rot-status-inactive { background: rgba(120,113,108,0.1); color: #78716c; }
+
+  @media (max-width: 900px) {
+    .rotation-wrap { grid-template-columns: 1fr; }
+  }
+
   /* ─── SCROLLBAR (matches analytics app) ─── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -570,6 +666,9 @@
       </p>
     </div>
   </div>
+
+  <!-- SEAT ROTATION SUMMARY -->
+  <div class="section" id="rotationSection"></div>
 
   <!-- STAT CARDS -->
   <div class="stats-grid" id="statsGrid"></div>
@@ -651,16 +750,27 @@ const USERS = [
   { name:"Bennett Miller", days:2, sessions:32, added:12951, removed:2762, commits:0, dates:[19,20] },
   { name:"Vikas W Jaiswal", days:6, sessions:28, added:1674, removed:343, commits:0, dates:[18,19,20,21,22,23] },
   { name:"Roman Podshivalov", days:3, sessions:27, added:6877, removed:1520, commits:13, dates:[19,20,23] },
-  { name:"Sunil J Punnoose", days:4, sessions:23, added:10155, removed:1799, commits:15, dates:[20,21,22,23] },
   { name:"John Wang", days:2, sessions:10, added:3854, removed:60, commits:0, dates:[17,22] },
-  { name:"Kalyana C Bedhu", days:2, sessions:9, added:9177, removed:2215, commits:0, dates:[22,23] },
   { name:"Christopher X Walker", days:1, sessions:4, added:141, removed:12, commits:0, dates:[19] },
-  { name:"Mingxin Chuai", days:1, sessions:2, added:0, removed:0, commits:0, dates:[17] },
   { name:"Kunal T Vakil", days:1, sessions:0, added:0, removed:0, commits:0, dates:[18] },
   { name:"Qiuhua Zheng", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
   { name:"Sivashankar Gnanasegaran", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
   { name:"Sujit Das", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
   { name:"Vinay K Vangala", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
+  // Recently added (with data)
+  { name:"Sunil J Punnoose", days:4, sessions:23, added:10155, removed:1799, commits:15, dates:[20,21,22,23], recentlyAdded:true },
+  { name:"Srikanth Geedipalli", days:3, sessions:12, added:4280, removed:610, commits:3, dates:[20,22,23], recentlyAdded:true },
+  { name:"Kalyana C Bedhu", days:2, sessions:9, added:9177, removed:2215, commits:0, dates:[22,23], recentlyAdded:true },
+  // Recently added + inactive (no data yet)
+  { name:"Vinay Kumar Madasu", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  { name:"Sherdil Khawaja", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  { name:"Angel Rexlin X Russelian", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  { name:"Akbar Sheak", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  // Rotated out
+  { name:"Mingxin Chuai", days:1, sessions:2, added:0, removed:0, commits:0, dates:[17], rotatedOut:true },
+  { name:"Vijay Viswanathan", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
+  { name:"Ayesha Arshad", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
+  { name:"Guoxiong Jin", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
 ];
 
 const DAILY = {
@@ -683,12 +793,12 @@ const DAILY = {
   "Bennett Miller":{19:28,20:4},
   "Vikas W Jaiswal":{18:7,19:4,20:5,21:2,22:8,23:2},
   "Roman Podshivalov":{19:9,20:7,23:11},
-  "Sunil J Punnoose":{20:3,21:7,22:10,23:3},
   "John Wang":{17:3,22:7},
-  "Kalyana C Bedhu":{22:5,23:4},
   "Christopher X Walker":{19:4},
-  "Mingxin Chuai":{17:2},
   "Kunal T Vakil":{18:0},
+  "Sunil J Punnoose":{20:3,21:7,22:10,23:3},
+  "Kalyana C Bedhu":{22:5,23:4},
+  "Mingxin Chuai":{17:2},
 };
 
 const WEEKDAYS = [17,18,19,20,23], WEEKENDS = [21,22];
@@ -716,19 +826,100 @@ function clearAppend(parent, ...children) {
   for (const c of children) parent.appendChild(c);
 }
 
+// ─── ROTATION SUMMARY ───
+function renderRotation() {
+  const rotIn = USERS.filter(u => u.recentlyAdded);
+  const rotOut = USERS.filter(u => u.rotatedOut);
+
+  function makeSvgIcon(isIn) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    // User icon parts
+    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path1.setAttribute('d', 'M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2');
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '8.5'); circle.setAttribute('cy', '7'); circle.setAttribute('r', '4');
+    const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line1.setAttribute('x1', '23'); line1.setAttribute('y1', '11'); line1.setAttribute('x2', '17'); line1.setAttribute('y2', '11');
+    svg.appendChild(path1);
+    svg.appendChild(circle);
+    svg.appendChild(line1);
+    if (isIn) {
+      const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line2.setAttribute('x1', '20'); line2.setAttribute('y1', '8'); line2.setAttribute('x2', '20'); line2.setAttribute('y2', '14');
+      svg.appendChild(line2);
+    }
+    return svg;
+  }
+
+  function makeTable(users, type) {
+    const isIn = type === 'in';
+    const card = el('div', { cls: 'rotation-card' });
+
+    const header = el('div', { cls: 'rotation-header ' + (isIn ? 'rot-in' : 'rot-out') });
+    const iconWrap = el('div', { cls: 'rot-icon' });
+    iconWrap.appendChild(makeSvgIcon(isIn));
+    header.appendChild(iconWrap);
+    header.appendChild(el('span', { cls: 'rot-title', text: isIn ? 'Rotated In' : 'Rotated Out' }));
+    header.appendChild(el('span', { cls: 'rot-count', text: String(users.length) }));
+    card.appendChild(header);
+
+    const table = el('table');
+    const thead = el('thead');
+    const headRow = el('tr');
+    headRow.appendChild(el('th', { text: 'Name' }));
+    headRow.appendChild(el('th', { cls: 'num', text: 'Status' }));
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = el('tbody');
+    for (const u of users) {
+      const tr = el('tr');
+      tr.appendChild(el('td', { cls: 'user-cell', text: u.name }));
+      const statusTd = el('td', { cls: 'num' });
+      if (isIn) {
+        const hasActivity = u.sessions > 0;
+        statusTd.appendChild(el('span', {
+          cls: 'rot-status ' + (hasActivity ? 'rot-status-active' : 'rot-status-inactive'),
+          text: hasActivity ? 'Active' : 'Inactive',
+        }));
+      } else {
+        statusTd.appendChild(el('span', { cls: 'rot-status rot-status-inactive', text: 'Removed' }));
+      }
+      tr.appendChild(statusTd);
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    card.appendChild(table);
+    return card;
+  }
+
+  const wrap = el('div', { cls: 'rotation-wrap' });
+  wrap.appendChild(makeTable(rotIn, 'in'));
+  wrap.appendChild(makeTable(rotOut, 'out'));
+  clearAppend(document.getElementById('rotationSection'), wrap);
+}
+
 // ─── STATS ───
 function renderStats() {
-  const totalSessions = USERS.reduce((s,u) => s + u.sessions, 0);
-  const totalAdded = USERS.reduce((s,u) => s + u.added, 0);
-  const totalRemoved = USERS.reduce((s,u) => s + u.removed, 0);
-  const totalCommits = USERS.reduce((s,u) => s + u.commits, 0);
-  const activeUsers = USERS.filter(u => u.sessions > 0).length;
+  const current = USERS.filter(u => !u.rotatedOut);
+  const totalSessions = current.reduce((s,u) => s + u.sessions, 0);
+  const totalAdded = current.reduce((s,u) => s + u.added, 0);
+  const totalRemoved = current.reduce((s,u) => s + u.removed, 0);
+  const totalCommits = current.reduce((s,u) => s + u.commits, 0);
+  const rosterUsers = USERS.filter(u => !u.rotatedOut);
+  const activeUsers = rosterUsers.filter(u => u.sessions > 0).length;
 
   const cards = [
     { label:"Code Sessions", value:fmt(totalSessions), accent:"var(--blue-500)", iconBg:"#eff6ff", iconColor:"var(--blue-600)", icon:'<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="12" y2="5"/>' },
     { label:"Lines Changed", value:fmt(totalAdded + totalRemoved), accent:"var(--emerald-500)", iconBg:"#ecfdf5", iconColor:"var(--emerald-600)", icon:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
     { label:"Commits", value:fmt(totalCommits), accent:"var(--amber-500)", iconBg:"#fffbeb", iconColor:"var(--amber-600)", icon:'<circle cx="12" cy="12" r="4"/><line x1="1.05" y1="12" x2="7" y2="12"/><line x1="17.01" y1="12" x2="22.96" y2="12"/>' },
-    { label:"Active Users", value:activeUsers + " / 29", accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+    { label:"Active Users", value:activeUsers + " / " + rosterUsers.length, accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
   ];
 
   clearAppend(document.getElementById('statsGrid'), ...cards.map(c => {
@@ -761,9 +952,10 @@ function renderStats() {
 // ─── ALERTS ───
 function renderAlerts() {
   const grid = document.getElementById('alertsGrid');
-  const zero = USERS.filter(u => u.days === 0);
-  const veryLow = USERS.filter(u => u.days > 0 && u.sessions < 5);
-  const weekendOnly = USERS.filter(u => u.days > 0 && u.sessions > 0 && u.dates.every(d => WEEKENDS.includes(d)));
+  const currentRoster = USERS.filter(u => !u.rotatedOut && !u.inactive);
+  const zero = currentRoster.filter(u => u.days === 0);
+  const veryLow = currentRoster.filter(u => u.days > 0 && u.sessions < 5);
+  const weekendOnly = currentRoster.filter(u => u.days > 0 && u.sessions > 0 && u.dates.every(d => WEEKENDS.includes(d)));
 
   function makeCard(cls, title, items) {
     const stripe = el('div', { cls: 'alert-stripe', style: 'background:' + (cls === 'alert-critical' ? 'var(--rose-500)' : 'var(--amber-500)') });
@@ -790,7 +982,7 @@ function renderAlerts() {
 
 // ─── BAR CHART ───
 function renderBarChart() {
-  const sorted = [...USERS].sort((a,b) => b.sessions - a.sessions);
+  const sorted = [...USERS].filter(u => !u.rotatedOut).sort((a,b) => b.sessions - a.sessions);
   const max = sorted[0].sessions;
   clearAppend(document.getElementById('barChart'), ...sorted.map(u => {
     const pct = max > 0 ? (u.sessions / max * 100) : 0;
@@ -821,7 +1013,7 @@ function renderHeatmap() {
     return r < 0.08 ? 1 : r < 0.2 ? 2 : r < 0.4 ? 3 : r < 0.7 ? 4 : 5;
   }
 
-  const sorted = [...USERS].sort((a,b) => b.sessions - a.sessions);
+  const sorted = [...USERS].filter(u => !u.rotatedOut).sort((a,b) => b.sessions - a.sessions);
   const grid = document.getElementById('heatmap');
   grid.textContent = '';
 
@@ -844,7 +1036,7 @@ function renderHeatmap() {
 function renderSchedule() {
   const both = [], wdOnly = [], weOnly = [];
   for (const u of USERS) {
-    if (u.days === 0) continue;
+    if (u.days === 0 || u.rotatedOut) continue;
     const wd = u.dates.some(d => WEEKDAYS.includes(d));
     const we = u.dates.some(d => WEEKENDS.includes(d));
     if (wd && we) both.push(u);
@@ -877,41 +1069,63 @@ function renderSchedule() {
 let sortKey = 'sessions', sortDir = -1;
 
 function getStatus(u) {
+  if (u.rotatedOut) return 'rotated';
+  if (u.inactive) return 'new-inactive';
   if (u.days === 0) return 'inactive';
   if (u.sessions < 10) return 'low';
   return 'active';
 }
 
 function renderTable() {
-  const sorted = [...USERS].sort((a,b) => {
-    let va, vb;
-    if (sortKey === 'lines') { va = a.added + a.removed; vb = b.added + b.removed; }
-    else { va = a[sortKey]; vb = b[sortKey]; }
-    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
-    return sortDir * (va - vb);
-  });
+  // Sort: active users first by sort key, then new-inactive, then rotated out
+  const regular = USERS.filter(u => !u.rotatedOut && !u.inactive);
+  const newInactive = USERS.filter(u => u.inactive && !u.rotatedOut);
+  const rotated = USERS.filter(u => u.rotatedOut);
+
+  function sortGroup(arr) {
+    return [...arr].sort((a,b) => {
+      let va, vb;
+      if (sortKey === 'lines') { va = a.added + a.removed; vb = b.added + b.removed; }
+      else { va = a[sortKey]; vb = b[sortKey]; }
+      if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+      return sortDir * (va - vb);
+    });
+  }
+
+  const sorted = [...sortGroup(regular), ...sortGroup(newInactive), ...sortGroup(rotated)];
 
   const tbody = document.getElementById('tableBody');
   tbody.textContent = '';
 
   for (const u of sorted) {
     const st = getStatus(u);
-    const dotCls = st === 'inactive' ? 'dot-inactive' : st === 'low' ? 'dot-low' : 'dot-active';
-    const rowCls = st === 'inactive' ? 'row-inactive' : st === 'low' ? 'row-low' : '';
+    const dotCls = st === 'rotated' ? 'dot-inactive' : st === 'new-inactive' ? 'dot-inactive' : st === 'inactive' ? 'dot-inactive' : st === 'low' ? 'dot-low' : 'dot-active';
+    const rowCls = st === 'rotated' ? 'row-rotated' : st === 'new-inactive' ? 'row-new-inactive' : st === 'inactive' ? 'row-inactive' : st === 'low' ? 'row-low' : '';
 
     const tr = el('tr', { cls: rowCls });
-    const tdName = el('td', { cls: 'user-cell' }, el('span', { cls: 'status-dot ' + dotCls }), document.createTextNode(u.name));
+    const tdName = el('td', { cls: 'user-cell' }, el('span', { cls: 'status-dot ' + dotCls }));
+    tdName.appendChild(document.createTextNode(u.name));
+    if (u.recentlyAdded) tdName.appendChild(el('span', { cls: 'user-badge badge-new', text: 'New' }));
+    if (u.inactive) tdName.appendChild(el('span', { cls: 'user-badge badge-inactive', text: 'Inactive' }));
+    if (u.rotatedOut) tdName.appendChild(el('span', { cls: 'user-badge badge-rotated', text: 'Rotated Out' }));
     tr.appendChild(tdName);
-    tr.appendChild(el('td', { cls: 'num', text: String(u.days) }));
-    tr.appendChild(el('td', { cls: 'num', text: fmt(u.sessions) }));
 
-    const tdLines = el('td', { cls: 'num' },
-      el('span', { cls: 'lines-added', text: '+' + fmt(u.added) }),
-      el('span', { cls: 'lines-sep', text: '/' }),
-      el('span', { cls: 'lines-removed', text: '-' + fmt(u.removed) })
-    );
-    tr.appendChild(tdLines);
-    tr.appendChild(el('td', { cls: 'num', text: String(u.commits) }));
+    const dash = '\u2014';
+    const dimmed = u.rotatedOut || u.inactive;
+    tr.appendChild(el('td', { cls: 'num', text: dimmed && u.days === 0 ? dash : String(u.days) }));
+    tr.appendChild(el('td', { cls: 'num', text: dimmed && u.sessions === 0 ? dash : fmt(u.sessions) }));
+
+    if (dimmed && u.added === 0 && u.removed === 0) {
+      tr.appendChild(el('td', { cls: 'num', text: dash }));
+    } else {
+      const tdLines = el('td', { cls: 'num' },
+        el('span', { cls: 'lines-added', text: '+' + fmt(u.added) }),
+        el('span', { cls: 'lines-sep', text: '/' }),
+        el('span', { cls: 'lines-removed', text: '-' + fmt(u.removed) })
+      );
+      tr.appendChild(tdLines);
+    }
+    tr.appendChild(el('td', { cls: 'num', text: dimmed && u.commits === 0 ? dash : String(u.commits) }));
     tbody.appendChild(tr);
   }
 
@@ -930,6 +1144,7 @@ document.querySelectorAll('#userTable th').forEach(th => {
   });
 });
 
+renderRotation();
 renderStats();
 renderAlerts();
 renderBarChart();
