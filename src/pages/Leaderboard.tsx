@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Trophy, Flame, Users, Zap } from 'lucide-react'
 import clsx from 'clsx'
 import { StatCard } from '@/components/ui/StatCard'
@@ -34,12 +34,8 @@ const rowHighlight: Record<number, string> = {
 }
 
 export function Leaderboard() {
-  const { range, setRange, fetch: fetchData, loading, error, users, userDaily } =
+  const { range, setRange, loading, users, userDaily } =
     useAnalyticsStore()
-
-  useEffect(() => {
-    if (users.length === 0 && !loading && !error) fetchData()
-  }, [fetchData, users.length, loading, error])
 
   const streaks = useMemo(() => computeStreaks(userDaily), [userDaily])
 

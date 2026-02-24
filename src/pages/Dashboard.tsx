@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Terminal, Code2, GitCommit, MessageSquare, AlertCircle } from 'lucide-react'
 import clsx from 'clsx'
 import { StatCard } from '@/components/ui/StatCard'
@@ -36,12 +36,8 @@ function formatTimestamp(iso: string): string {
 }
 
 export function Dashboard() {
-  const { range, setRange, fetch: fetchData, loading, error, daily, users, tools, projects, userDaily, selectedUser, setSelectedUser, fetchedAt, dataDateRange } =
+  const { range, setRange, loading, error, daily, users, tools, projects, userDaily, selectedUser, setSelectedUser, fetchedAt, dataDateRange } =
     useAnalyticsStore()
-
-  useEffect(() => {
-    if (daily.length === 0 && !loading && !error) fetchData()
-  }, [fetchData, daily.length, loading, error])
 
   const stats = useMemo(() => {
     const totalSessions = daily.reduce((s, d) => s + d.sessions, 0)
