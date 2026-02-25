@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
 import { Dashboard } from '@/pages/Dashboard'
-import { Leaderboard } from '@/pages/Leaderboard'
 import { useAnalyticsStore } from '@/stores/analyticsStore'
 
 function DataLoader({ children }: { children: React.ReactNode }) {
@@ -18,15 +16,10 @@ function DataLoader({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <DataLoader>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-          </Routes>
-        </Layout>
-      </DataLoader>
-    </BrowserRouter>
+    <DataLoader>
+      <Layout>
+        <Dashboard />
+      </Layout>
+    </DataLoader>
   )
 }
