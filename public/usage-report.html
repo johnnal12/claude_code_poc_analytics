@@ -965,7 +965,7 @@ function renderStats() {
     { label:"Code Sessions", value:"1,665", accent:"var(--blue-500)", iconBg:"#eff6ff", iconColor:"var(--blue-600)", icon:'<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="12" y2="5"/>' },
     { label:"Lines Changed", value:"911,319", accent:"var(--emerald-500)", iconBg:"#ecfdf5", iconColor:"var(--emerald-600)", icon:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
     { label:"Commits", value:"409", accent:"var(--amber-500)", iconBg:"#fffbeb", iconColor:"var(--amber-600)", icon:'<circle cx="12" cy="12" r="4"/><line x1="1.05" y1="12" x2="7" y2="12"/><line x1="17.01" y1="12" x2="22.96" y2="12"/>' },
-    { label:"Active Users", value:"24 / 34", accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+    { label:"Active Users", value:"31 / 34", accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
   ];
 
   clearAppend(document.getElementById('statsGrid'), ...cards.map(c => {
@@ -998,7 +998,7 @@ function renderStats() {
 // ─── ALERTS ───
 function renderAlerts() {
   const grid = document.getElementById('alertsGrid');
-  const currentRoster = USERS.filter(u => !u.rotatedOut && !u.inactive && !u.addedAfterPeriod);
+  const currentRoster = USERS.filter(u => !u.rotatedOut && !u.inactive && !u.addedAfterPeriod && !u.recentlyAdded);
   const zero = currentRoster.filter(u => u.days === 0);
   const veryLow = currentRoster.filter(u => u.days > 0 && u.sessions < 5);
   const weekendOnly = currentRoster.filter(u => u.days > 0 && u.sessions > 0 && u.dates.every(d => WEEKENDS.includes(d)));
