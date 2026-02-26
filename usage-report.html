@@ -4,504 +4,462 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code Usage Report — Feb 17–23, 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Newsreader:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #0a0c10;
-    --bg-surface: #12151c;
-    --bg-card: #181c26;
-    --bg-elevated: #1e2330;
-    --border: #262c3a;
-    --border-subtle: #1c2130;
-    --text-primary: #e8ecf4;
-    --text-secondary: #8892a6;
-    --text-muted: #5a6478;
-    --accent-cyan: #22d3ee;
-    --accent-cyan-dim: rgba(34, 211, 238, 0.12);
-    --accent-green: #34d399;
-    --accent-green-dim: rgba(52, 211, 153, 0.12);
-    --accent-amber: #fbbf24;
-    --accent-amber-dim: rgba(251, 191, 36, 0.12);
-    --accent-red: #f87171;
-    --accent-red-dim: rgba(248, 113, 113, 0.12);
-    --accent-purple: #a78bfa;
-    --accent-blue: #60a5fa;
-    --gradient-cyan: linear-gradient(135deg, #22d3ee, #06b6d4);
-    --gradient-green: linear-gradient(135deg, #34d399, #10b981);
-    --gradient-amber: linear-gradient(135deg, #fbbf24, #f59e0b);
-    --gradient-red: linear-gradient(135deg, #f87171, #ef4444);
-    --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    /* Warm palette — matches analytics app */
+    --warm-50: #FAF7F2;
+    --warm-100: #F3EDE4;
+    --warm-200: #E7E0D6;
+    --warm-300: #D4CBC0;
+    --warm-400: #A8A29E;
+    --warm-500: #78716C;
+    --warm-600: #57534E;
+    --warm-700: #44403C;
+    --warm-800: #292524;
+    --warm-900: #1C1917;
+    --warm-950: #171411;
+
+    --terra-400: #E07040;
+    --terra-500: #C7522A;
+
+    --blue-400: #60a5fa;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --blue-950-40: rgba(23, 37, 84, 0.4);
+
+    --emerald-400: #34d399;
+    --emerald-500: #10b981;
+    --emerald-600: #059669;
+    --emerald-950-40: rgba(6, 78, 59, 0.4);
+
+    --amber-400: #fbbf24;
+    --amber-500: #f59e0b;
+    --amber-600: #d97706;
+    --amber-950-40: rgba(78, 42, 4, 0.4);
+
+    --rose-400: #fb7185;
+    --rose-500: #f43f5e;
+    --rose-600: #e11d48;
+    --rose-950-40: rgba(76, 5, 25, 0.4);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--bg-deep);
-    color: var(--text-primary);
-    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-50);
+    color: #44403C;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: var(--noise);
-    pointer-events: none;
-    z-index: 0;
+    -webkit-font-smoothing: antialiased;
   }
 
   .container {
-    max-width: 1440px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 32px 80px;
-    position: relative;
-    z-index: 1;
+    padding: 0 24px 80px;
   }
 
-  header {
-    padding: 48px 0 40px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
-    position: relative;
+  /* ─── HEADER (matches Navbar) ─── */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    border-bottom: 1px solid rgba(231, 224, 214, 0.8);
+    background: rgba(250, 247, 242, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 200px;
-    height: 1px;
-    background: var(--gradient-cyan);
-  }
-
-  .header-top {
+  .navbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
-    align-items: flex-start;
+    height: 56px;
+    align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
+    padding: 0 16px;
   }
 
-  .header-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-cyan);
-    background: var(--accent-cyan-dim);
-    padding: 5px 12px;
-    border-radius: 4px;
-    border: 1px solid rgba(34, 211, 238, 0.2);
-    margin-bottom: 16px;
-  }
-
-  .header-badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent-cyan);
-    animation: pulse-dot 2s ease infinite;
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  h1 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: var(--text-primary);
-  }
-
-  h1 span {
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  .header-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-  }
-
-  .header-right { text-align: right; flex-shrink: 0; }
-
-  .date-range {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--text-secondary);
-    background: var(--bg-card);
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-
-  .stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-
-  .stat-card:hover { filter: brightness(1.05); }
-
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-
-  .stat-card:nth-child(1)::before { background: var(--gradient-cyan); }
-  .stat-card:nth-child(2)::before { background: var(--gradient-green); }
-  .stat-card:nth-child(3)::before { background: var(--gradient-amber); }
-  .stat-card:nth-child(4)::before { background: var(--gradient-red); }
-
-  .stat-label {
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-
-  .stat-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .stat-card:nth-child(1) .stat-value { color: var(--accent-cyan); }
-  .stat-card:nth-child(2) .stat-value { color: var(--accent-green); }
-  .stat-card:nth-child(3) .stat-value { color: var(--accent-amber); }
-  .stat-card:nth-child(4) .stat-value { color: var(--accent-red); }
-
-  .stat-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .section { margin-bottom: 40px; }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .section-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-
-  h2 {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  h2 .count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--text-muted);
-    margin-left: 8px;
-  }
-
-  .alerts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .alert-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .alert-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 3px;
-  }
-
-  .alert-critical::before { background: var(--accent-red); }
-  .alert-warning::before { background: var(--accent-amber); }
-
-  .alert-title {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 14px;
+  .navbar-brand {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .alert-critical .alert-title { color: var(--accent-red); }
-  .alert-warning .alert-title { color: var(--accent-amber); }
+  .navbar-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    background: var(--terra-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  .alert-users { list-style: none; }
+  .navbar-icon svg { width: 18px; height: 18px; color: white; }
 
-  .alert-users li {
+  .navbar-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #292524;
+  }
+
+  .navbar-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--terra-400);
+    background: rgba(199, 82, 42, 0.12);
+    padding: 3px 10px;
+    border-radius: 9999px;
+  }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    padding: 32px 0 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .page-header h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #292524;
+  }
+
+  .page-header .subtitle {
+    margin-top: 2px;
+    font-size: 14px;
+    color: #78716c;
+  }
+
+  .page-header .date-meta {
+    font-size: 12px;
+    color: #a8a29e;
+    margin-top: 4px;
+  }
+
+  .page-header .date-meta .badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--warm-100);
+    color: #78716c;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    margin-left: 6px;
+  }
+
+  /* ─── STAT CARDS (matches StatCard.tsx) ─── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    border: none;
+  }
+
+  .stat-card .accent-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .stat-card .stat-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #a8a29e;
+  }
+
+  .stat-value {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    margin-top: 8px;
+    color: #292524;
+  }
+
+  .stat-icon-wrap {
+    border-radius: 12px;
+    padding: 10px;
+  }
+
+  .stat-icon-wrap svg { width: 20px; height: 20px; }
+
+  .stat-sub {
+    font-size: 12px;
+    color: #78716c;
+    margin-top: 8px;
+  }
+
+  /* ─── CARD (matches Card.tsx) ─── */
+  .card {
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #a8a29e;
+    margin-bottom: 20px;
+  }
+
+  /* ─── SECTION SPACING ─── */
+  .section { margin-bottom: 20px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* ─── ALERTS ─── */
+  .alert-card {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .alert-card .alert-stripe {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+  }
+
+  .alert-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 14px;
+  }
+
+  .alert-critical .alert-title { color: var(--rose-600); }
+  .alert-warning .alert-title { color: var(--amber-600); }
+
+  .alert-list { list-style: none; }
+
+  .alert-list li {
     font-size: 13px;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border-subtle);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--warm-100);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .alert-users li:last-child { border-bottom: none; }
-  .alert-users .user-name { color: var(--text-primary); font-weight: 500; }
-  .alert-users .user-detail {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-  }
+  .alert-list li:last-child { border-bottom: none; }
+  .alert-list .name { font-weight: 500; color: #292524; }
+  .alert-list .detail { font-size: 11px; color: #a8a29e; font-feature-settings: 'tnum'; }
 
-  .table-wrapper {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+  /* ─── TABLE (matches EndpointBreakdown) ─── */
+  .table-card {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
     overflow: hidden;
   }
 
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  thead { background: var(--bg-elevated); }
+  .table-card .card-title { padding: 24px 24px 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+  thead tr {
+    border-bottom: 1px solid rgba(231, 224, 214, 0.8);
+    text-align: left;
+  }
 
   th {
-    text-align: left;
-    padding: 12px 16px;
-    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.12em;
+    color: #a8a29e;
+    padding: 0 16px 12px;
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
   }
 
-  th:hover { color: var(--text-secondary); }
-  th.sorted-asc::after { content: ' \u25B2'; font-size: 9px; }
-  th.sorted-desc::after { content: ' \u25BC'; font-size: 9px; }
-  th.num, td.num { text-align: right; }
+  th:first-child { padding-left: 24px; }
+  th:last-child { padding-right: 24px; }
+  th:hover { color: #78716c; }
+  th.num { text-align: right; }
+  th.sorted-asc::after { content: ' \u25B2'; font-size: 8px; }
+  th.sorted-desc::after { content: ' \u25BC'; font-size: 8px; }
 
   td {
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border-subtle);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    padding: 12px 16px;
+    font-feature-settings: 'tnum';
+    letter-spacing: -0.03em;
+    font-size: 13px;
+    color: #57534E;
   }
+
+  td:first-child { padding-left: 24px; }
+  td:last-child { padding-right: 24px; }
+  td.num { text-align: right; }
 
   td.user-cell {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
     font-weight: 500;
+    letter-spacing: 0;
+    font-feature-settings: normal;
   }
 
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  .row-inactive td { opacity: 0.5; }
-  .row-inactive td.user-cell { color: var(--accent-red); opacity: 1; }
-  .row-low td.user-cell { color: var(--accent-amber); }
-  .row-active td.user-cell { color: var(--text-primary); }
+  tr { border-bottom: 1px solid var(--warm-100); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--warm-50); }
+
+  .row-inactive td { opacity: 0.4; }
+  .row-inactive td.user-cell { opacity: 1; color: var(--rose-600); }
+  .row-low td.user-cell { color: var(--amber-600); }
+  .row-rotated td { opacity: 0.35; }
+  .row-rotated td.user-cell { opacity: 1; color: #78716c; }
+  .row-new-inactive td { opacity: 0.45; }
+  .row-new-inactive td.user-cell { opacity: 1; }
+
+  .user-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 1px 6px;
+    border-radius: 9999px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  .badge-new { background: rgba(14,165,233,0.1); color: #0284c7; }
+  .badge-inactive { background: rgba(120,113,108,0.1); color: #78716c; }
+  .badge-rotated { background: rgba(217,119,6,0.1); color: #b45309; }
+
+  .lines-added { color: var(--emerald-600); }
+  .lines-removed { color: var(--rose-500); }
+  .lines-sep { color: var(--warm-300); margin: 0 2px; }
 
   .status-dot {
     display: inline-block;
-    width: 7px; height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     margin-right: 8px;
-    flex-shrink: 0;
   }
 
-  .status-dot.s-active { background: var(--accent-green); box-shadow: 0 0 6px rgba(52,211,153,0.4); }
-  .status-dot.s-low { background: var(--accent-amber); box-shadow: 0 0 6px rgba(251,191,36,0.3); }
-  .status-dot.s-inactive { background: var(--accent-red); box-shadow: 0 0 6px rgba(248,113,113,0.3); }
+  .dot-active { background: var(--emerald-500); box-shadow: 0 0 6px rgba(16,185,129,0.3); }
+  .dot-low { background: var(--amber-500); box-shadow: 0 0 6px rgba(245,158,11,0.2); }
+  .dot-inactive { background: var(--rose-500); box-shadow: 0 0 6px rgba(244,63,94,0.2); }
 
-  .bar-chart {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-  }
-
+  /* ─── BAR CHART ─── */
   .bar-row {
     display: grid;
-    grid-template-columns: 180px 1fr 60px;
+    grid-template-columns: 170px 1fr 55px;
     align-items: center;
-    gap: 12px;
-    padding: 4px 0;
+    gap: 10px;
+    padding: 3px 0;
   }
 
   .bar-name {
     font-size: 12px;
     font-weight: 500;
     text-align: right;
+    color: #57534E;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: var(--text-secondary);
   }
 
   .bar-track {
-    height: 20px;
-    background: var(--bg-elevated);
-    border-radius: 3px;
+    height: 18px;
+    background: var(--warm-100);
+    border-radius: 4px;
     overflow: hidden;
   }
 
   .bar-fill {
     height: 100%;
-    border-radius: 3px;
-    background: var(--gradient-cyan);
+    border-radius: 4px;
     transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .bar-fill.low { background: var(--gradient-amber); }
-  .bar-fill.inactive { background: var(--gradient-red); }
+  .bar-fill.fill-normal { background: var(--blue-500); }
+  .bar-fill.fill-low { background: var(--amber-500); }
+  .bar-fill.fill-inactive { background: var(--rose-500); }
 
   .bar-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-  }
-
-  .schedule-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-  }
-
-  .schedule-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-  }
-
-  .schedule-card h3 {
     font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 14px;
-    color: var(--text-muted);
+    color: #a8a29e;
+    text-align: right;
+    font-feature-settings: 'tnum';
   }
 
-  .schedule-card h3 .pill {
-    display: inline-block;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-left: 6px;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .schedule-card:nth-child(1) h3 .pill { background: var(--accent-green-dim); color: var(--accent-green); }
-  .schedule-card:nth-child(2) h3 .pill { background: var(--accent-amber-dim); color: var(--accent-amber); }
-  .schedule-card:nth-child(3) h3 .pill { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
-
-  .schedule-list { list-style: none; }
-
-  .schedule-list li {
-    font-size: 13px;
-    padding: 5px 0;
-    color: var(--text-secondary);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .schedule-list .sess {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .heatmap-wrapper {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    overflow-x: auto;
-  }
-
+  /* ─── HEATMAP ─── */
   .heatmap {
     display: grid;
-    grid-template-columns: 200px repeat(7, 1fr);
+    grid-template-columns: 190px repeat(7, 1fr);
     gap: 3px;
-    min-width: 700px;
+    min-width: 650px;
   }
 
   .hm-header {
-    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-muted);
+    color: #a8a29e;
     text-align: center;
     padding: 8px 4px;
   }
 
-  .hm-header.day-label { text-align: right; padding-right: 12px; }
-
-  .hm-header.weekend { color: var(--accent-purple); opacity: 0.7; }
+  .hm-header.weekend { color: var(--terra-400); opacity: 0.7; }
 
   .hm-name {
     font-size: 12px;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: #57534E;
     display: flex;
     align-items: center;
-    padding-right: 12px;
+    justify-content: flex-end;
+    padding-right: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -512,151 +470,303 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 500;
-    min-height: 28px;
+    font-feature-settings: 'tnum';
+    min-height: 26px;
     transition: transform 0.15s;
     cursor: default;
-    position: relative;
   }
 
-  .hm-cell:hover { transform: scale(1.15); z-index: 2; }
+  .hm-cell:hover { transform: scale(1.12); z-index: 2; }
 
-  .hm-cell.intensity-0 { background: var(--bg-elevated); color: var(--text-muted); }
-  .hm-cell.intensity-1 { background: rgba(34, 211, 238, 0.1); color: rgba(34,211,238,0.6); }
-  .hm-cell.intensity-2 { background: rgba(34, 211, 238, 0.2); color: rgba(34,211,238,0.8); }
-  .hm-cell.intensity-3 { background: rgba(34, 211, 238, 0.35); color: #22d3ee; }
-  .hm-cell.intensity-4 { background: rgba(34, 211, 238, 0.5); color: #fff; }
-  .hm-cell.intensity-5 { background: rgba(34, 211, 238, 0.7); color: #fff; font-weight: 700; }
+  .hm-cell.i-0 { background: var(--warm-100); color: var(--warm-300); }
+  .hm-cell.i-1 { background: rgba(59,130,246,0.08); color: rgba(37,99,235,0.5); }
+  .hm-cell.i-2 { background: rgba(59,130,246,0.14); color: rgba(37,99,235,0.7); }
+  .hm-cell.i-3 { background: rgba(59,130,246,0.22); color: var(--blue-600); }
+  .hm-cell.i-4 { background: rgba(59,130,246,0.35); color: #fff; }
+  .hm-cell.i-5 { background: rgba(59,130,246,0.55); color: #fff; font-weight: 700; }
 
-  .hm-cell.weekend-col { border-left: 2px solid rgba(167,139,250,0.15); }
+  .hm-cell.no-seat {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--warm-100),
+      var(--warm-100) 2px,
+      transparent 2px,
+      transparent 5px
+    );
+    color: transparent;
+  }
+
+  .hm-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 6px;
+  }
+
+  .hm-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--warm-200);
+  }
+
+  .hm-divider-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 2px 10px;
+    border-radius: 9999px;
+  }
+
+  .hm-divider-in .hm-divider-label { color: #0284c7; background: rgba(14,165,233,0.08); }
+  .hm-divider-out .hm-divider-label { color: #b45309; background: rgba(217,119,6,0.08); }
 
   .heatmap-legend {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 16px;
+    gap: 5px;
+    margin-top: 14px;
     justify-content: flex-end;
-  }
-
-  .heatmap-legend span {
-    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: var(--text-muted);
+    color: #a8a29e;
   }
 
-  .legend-cell { width: 16px; height: 16px; border-radius: 3px; }
+  .lg-cell { width: 14px; height: 14px; border-radius: 3px; }
 
-  @keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* ─── SCHEDULE ─── */
+  .schedule-card {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    padding: 20px;
   }
 
-  .animate-in { animation: fadeSlideUp 0.5s ease both; }
-  .delay-1 { animation-delay: 0.05s; }
-  .delay-2 { animation-delay: 0.1s; }
-  .delay-3 { animation-delay: 0.15s; }
-  .delay-4 { animation-delay: 0.2s; }
-  .delay-5 { animation-delay: 0.25s; }
-  .delay-6 { animation-delay: 0.3s; }
+  .schedule-card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #a8a29e;
+    margin-bottom: 14px;
+  }
 
+  .schedule-card h3 .pill {
+    font-size: 10px;
+    padding: 1px 8px;
+    border-radius: 9999px;
+    margin-left: 6px;
+    font-weight: 700;
+    font-feature-settings: 'tnum';
+  }
+
+  .pill-green { background: rgba(5,150,105,0.08); color: var(--emerald-600); }
+  .pill-amber { background: rgba(217,119,6,0.08); color: var(--amber-600); }
+  .pill-terra { background: rgba(199,82,42,0.08); color: var(--terra-500); }
+
+  .sched-list { list-style: none; }
+
+  .sched-list li {
+    font-size: 13px;
+    padding: 5px 0;
+    color: #57534E;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sched-list .sess {
+    font-size: 11px;
+    color: #a8a29e;
+    font-feature-settings: 'tnum';
+  }
+
+  /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .alerts-grid { grid-template-columns: 1fr; }
-    .schedule-grid { grid-template-columns: 1fr; }
-    .bar-row { grid-template-columns: 120px 1fr 50px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
-    .container { padding: 0 16px 60px; }
     .stats-grid { grid-template-columns: 1fr; }
-    h1 { font-size: 24px; }
-    .stat-value { font-size: 28px; }
+    .bar-row { grid-template-columns: 120px 1fr 45px; }
   }
 
+  /* ─── ROTATION SUMMARY ─── */
+  .rotation-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .rotation-card {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    overflow: hidden;
+  }
+
+  .rotation-header {
+    padding: 16px 24px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rotation-header .rot-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rotation-header .rot-icon svg { width: 14px; height: 14px; }
+
+  .rotation-header .rot-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .rotation-header .rot-count {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 9999px;
+    font-feature-settings: 'tnum';
+  }
+
+  .rot-in .rot-icon { background: rgba(14,165,233,0.1); color: #0284c7; }
+  .rot-in .rot-title { color: #0284c7; }
+  .rot-in .rot-count { background: rgba(14,165,233,0.1); color: #0284c7; }
+
+  .rot-out .rot-icon { background: rgba(217,119,6,0.1); color: #b45309; }
+  .rot-out .rot-title { color: #b45309; }
+  .rot-out .rot-count { background: rgba(217,119,6,0.1); color: #b45309; }
+
+  .rotation-card table { font-size: 13px; }
+  .rotation-card th { font-size: 10px; padding: 0 16px 8px; }
+  .rotation-card td { padding: 8px 16px; }
+  .rotation-card th:first-child, .rotation-card td:first-child { padding-left: 24px; }
+  .rotation-card th:last-child, .rotation-card td:last-child { padding-right: 24px; }
+
+  .rot-status {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+  }
+
+  .rot-status-active { background: rgba(5,150,105,0.08); color: var(--emerald-600); }
+  .rot-status-inactive { background: rgba(120,113,108,0.1); color: #78716c; }
+
+  @media (max-width: 900px) {
+    .rotation-wrap { grid-template-columns: 1fr; }
+  }
+
+  /* ─── SCROLLBAR (matches analytics app) ─── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg-deep); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(120,113,108,0.2); border-radius: 3px; }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <header class="animate-in">
-    <div class="header-top">
-      <div>
-        <div class="header-badge">Weekly Report</div>
-        <h1>Claude Code Usage <span>/ 7-Day Review</span></h1>
-        <div class="header-meta">Fannie Mae Engineering &mdash; 29 team members tracked</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">
+      <div class="navbar-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       </div>
-      <div class="header-right">
-        <div class="date-range">Feb 17 &ndash; 23, 2026</div>
-      </div>
+      <span class="navbar-title">Claude Analytics</span>
     </div>
-  </header>
+    <span class="navbar-badge">Weekly Report</span>
+  </div>
+</nav>
 
+<div class="container">
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <h1>Usage Report</h1>
+      <p class="subtitle">Claude Code activity across your organization</p>
+      <p class="date-meta">
+        Feb 17 &ndash; Feb 23, 2026
+        <span class="badge">7-day window</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
   <div class="stats-grid" id="statsGrid"></div>
 
-  <div class="section animate-in delay-2">
-    <div class="section-header">
-      <div class="section-icon" style="background:var(--accent-red-dim);color:var(--accent-red);">&#9888;</div>
-      <h2>Usage Alerts <span class="count">8 flagged</span></h2>
-    </div>
-    <div class="alerts-grid" id="alertsGrid"></div>
+  <!-- ROSTER CHANGES -->
+  <div class="section" style="margin-top:32px;padding-top:28px;border-top:1px solid var(--warm-200);">
+    <h2 style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#292524;letter-spacing:-0.02em;margin-bottom:16px;">Roster Changes</h2>
+    <div id="rotationSection"></div>
   </div>
 
-  <div class="section animate-in delay-3">
-    <div class="section-header">
-      <div class="section-icon" style="background:var(--accent-cyan-dim);color:var(--accent-cyan);">&#9632;</div>
-      <h2>Sessions by User</h2>
-    </div>
-    <div class="bar-chart" id="barChart"></div>
+  <!-- ADOPTION CONCERNS -->
+  <div class="section" style="margin-top:32px;padding-top:28px;border-top:1px solid var(--warm-200);">
+    <h2 style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#292524;letter-spacing:-0.02em;margin-bottom:16px;">Adoption Concerns</h2>
+    <div class="grid-2" id="alertsGrid"></div>
   </div>
 
-  <div class="section animate-in delay-4">
-    <div class="section-header">
-      <div class="section-icon" style="background:var(--accent-green-dim);color:var(--accent-green);">&#9638;</div>
-      <h2>Daily Activity Heatmap</h2>
+  <!-- USAGE DATA -->
+  <div style="margin-top:32px;padding-top:28px;border-top:1px solid var(--warm-200);">
+    <h2 style="font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:600;color:#292524;letter-spacing:-0.02em;margin-bottom:20px;">Usage Data</h2>
+  </div>
+
+  <!-- BAR CHART -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">Sessions by User</div>
+      <div id="barChart"></div>
     </div>
-    <div class="heatmap-wrapper">
+  </div>
+
+  <!-- HEATMAP -->
+  <div class="section">
+    <div class="card" style="overflow-x:auto;">
+      <div class="card-title">Daily Activity Heatmap</div>
       <div class="heatmap" id="heatmap"></div>
       <div class="heatmap-legend">
         <span>Less</span>
-        <div class="legend-cell" style="background:var(--bg-elevated);"></div>
-        <div class="legend-cell" style="background:rgba(34,211,238,0.1);"></div>
-        <div class="legend-cell" style="background:rgba(34,211,238,0.2);"></div>
-        <div class="legend-cell" style="background:rgba(34,211,238,0.35);"></div>
-        <div class="legend-cell" style="background:rgba(34,211,238,0.5);"></div>
-        <div class="legend-cell" style="background:rgba(34,211,238,0.7);"></div>
+        <div class="lg-cell" style="background:var(--warm-100);"></div>
+        <div class="lg-cell" style="background:rgba(59,130,246,0.08);"></div>
+        <div class="lg-cell" style="background:rgba(59,130,246,0.14);"></div>
+        <div class="lg-cell" style="background:rgba(59,130,246,0.22);"></div>
+        <div class="lg-cell" style="background:rgba(59,130,246,0.35);"></div>
+        <div class="lg-cell" style="background:rgba(59,130,246,0.55);"></div>
         <span>More</span>
       </div>
     </div>
   </div>
 
-  <div class="section animate-in delay-5">
-    <div class="section-header">
-      <div class="section-icon" style="background:rgba(167,139,250,0.12);color:var(--accent-purple);">&#9684;</div>
-      <h2>Work Schedule Patterns</h2>
-    </div>
-    <div class="schedule-grid" id="scheduleGrid"></div>
+  <!-- SCHEDULE -->
+  <div class="section">
+    <div class="grid-3" id="scheduleGrid"></div>
   </div>
 
-  <div class="section animate-in delay-6">
-    <div class="section-header">
-      <div class="section-icon" style="background:var(--accent-cyan-dim);color:var(--accent-cyan);">&#9776;</div>
-      <h2>Full Roster <span class="count">29 users</span></h2>
-    </div>
-    <div class="table-wrapper">
+  <!-- TABLE -->
+  <div class="section">
+    <div class="table-card">
+      <div class="card-title">Full Roster</div>
       <table id="userTable">
         <thead>
           <tr>
             <th data-key="name">User</th>
             <th data-key="days" class="num">Days /7</th>
             <th data-key="sessions" class="num">Sessions</th>
-            <th data-key="added" class="num">Lines +</th>
-            <th data-key="removed" class="num">Lines &minus;</th>
+            <th data-key="lines" class="num">Lines +/-</th>
             <th data-key="commits" class="num">Commits</th>
           </tr>
         </thead>
@@ -667,7 +777,6 @@
 </div>
 
 <script>
-// All data is hardcoded — no user input flows into DOM rendering.
 const USERS = [
   { name:"John Albesa", days:7, sessions:304, added:49821, removed:8908, commits:19, dates:[17,18,19,20,21,22,23] },
   { name:"Eve Freeman", days:6, sessions:176, added:96979, removed:14426, commits:190, dates:[17,18,20,21,22,23] },
@@ -688,52 +797,61 @@ const USERS = [
   { name:"Bennett Miller", days:2, sessions:32, added:12951, removed:2762, commits:0, dates:[19,20] },
   { name:"Vikas W Jaiswal", days:6, sessions:28, added:1674, removed:343, commits:0, dates:[18,19,20,21,22,23] },
   { name:"Roman Podshivalov", days:3, sessions:27, added:6877, removed:1520, commits:13, dates:[19,20,23] },
-  { name:"Sunil J Punnoose", days:4, sessions:23, added:10155, removed:1799, commits:15, dates:[20,21,22,23] },
   { name:"John Wang", days:2, sessions:10, added:3854, removed:60, commits:0, dates:[17,22] },
-  { name:"Kalyana C Bedhu", days:2, sessions:9, added:9177, removed:2215, commits:0, dates:[22,23] },
   { name:"Christopher X Walker", days:1, sessions:4, added:141, removed:12, commits:0, dates:[19] },
-  { name:"Mingxin Chuai", days:1, sessions:2, added:0, removed:0, commits:0, dates:[17] },
   { name:"Kunal T Vakil", days:1, sessions:0, added:0, removed:0, commits:0, dates:[18] },
   { name:"Qiuhua Zheng", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
   { name:"Sivashankar Gnanasegaran", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
   { name:"Sujit Das", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
   { name:"Vinay K Vangala", days:0, sessions:0, added:0, removed:0, commits:0, dates:[] },
+  // Recently added (with data)
+  { name:"Sunil J Punnoose", days:4, sessions:23, added:10155, removed:1799, commits:15, dates:[20,21,22,23], recentlyAdded:true },
+  { name:"Srikanth Geedipalli", days:3, sessions:12, added:4280, removed:610, commits:3, dates:[20,22,23], recentlyAdded:true },
+  { name:"Kalyana C Bedhu", days:2, sessions:9, added:9177, removed:2215, commits:0, dates:[22,23], recentlyAdded:true },
+  // Recently added + inactive (no data yet)
+  { name:"Vinay Kumar Madasu", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  { name:"Sherdil Khawaja", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  { name:"Angel Rexlin X Russelian", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  { name:"Akbar Sheak", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, inactive:true },
+  // Rotated out
+  { name:"Mingxin Chuai", days:1, sessions:2, added:0, removed:0, commits:0, dates:[17], rotatedOut:true },
+  { name:"Vijay Viswanathan", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
+  { name:"Ayesha Arshad", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
+  { name:"Guoxiong Jin", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
 ];
 
 const DAILY = {
-  "John Albesa":       {17:20,18:73,19:105,20:38,21:15,22:29,23:24},
-  "Eve Freeman":       {17:44,18:15,20:8,21:36,22:34,23:39},
-  "Duc X Nguyen":      {17:37,18:36,19:37,20:8,22:5},
-  "Dinesh Kumar Vivekanandhan": {19:27,20:52,21:9,22:17,23:4},
-  "Vivek Ojha":        {17:34,18:21,19:10,20:4,22:13,23:24},
-  "Bojan Mihovilovic": {17:4,18:21,19:19,20:14,21:24,22:12,23:7},
-  "Charles A Smith":   {17:3,18:17,19:8,20:25,21:8,22:14,23:22},
-  "Feng X Hou":        {17:4,18:15,19:27,20:7,21:32},
-  "Seyedmeysam Abolghasemi": {17:5,18:9,19:4,20:11,21:16,22:28},
+  "John Albesa":{17:20,18:73,19:105,20:38,21:15,22:29,23:24},
+  "Eve Freeman":{17:44,18:15,20:8,21:36,22:34,23:39},
+  "Duc X Nguyen":{17:37,18:36,19:37,20:8,22:5},
+  "Dinesh Kumar Vivekanandhan":{19:27,20:52,21:9,22:17,23:4},
+  "Vivek Ojha":{17:34,18:21,19:10,20:4,22:13,23:24},
+  "Bojan Mihovilovic":{17:4,18:21,19:19,20:14,21:24,22:12,23:7},
+  "Charles A Smith":{17:3,18:17,19:8,20:25,21:8,22:14,23:22},
+  "Feng X Hou":{17:4,18:15,19:27,20:7,21:32},
+  "Seyedmeysam Abolghasemi":{17:5,18:9,19:4,20:11,21:16,22:28},
   "Stephen C Schwartz":{18:24,19:8,20:4,21:11,22:13,23:3},
-  "Jacob Meador":      {17:8,18:7,19:8,20:15,21:5,22:5,23:11},
-  "Moeen Rana":        {17:3,18:12,19:7,20:10,21:14,22:11,23:2},
-  "Emmett X York":     {18:14,19:9,20:3,21:7,22:10,23:5},
-  "Tushar X Gupta":    {17:4,18:16,19:5,20:3,23:15},
-  "Guopeng Yin":       {17:6,18:7,19:10,20:4,21:5,22:3,23:2},
-  "Manideep Reddy Chinthareddy": {17:4,18:11,19:11,21:8,22:3},
-  "Bennett Miller":    {19:28,20:4},
-  "Vikas W Jaiswal":   {18:7,19:4,20:5,21:2,22:8,23:2},
-  "Roman Podshivalov": {19:9,20:7,23:11},
-  "Sunil J Punnoose":  {20:3,21:7,22:10,23:3},
-  "John Wang":         {17:3,22:7},
-  "Kalyana C Bedhu":   {22:5,23:4},
+  "Jacob Meador":{17:8,18:7,19:8,20:15,21:5,22:5,23:11},
+  "Moeen Rana":{17:3,18:12,19:7,20:10,21:14,22:11,23:2},
+  "Emmett X York":{18:14,19:9,20:3,21:7,22:10,23:5},
+  "Tushar X Gupta":{17:4,18:16,19:5,20:3,23:15},
+  "Guopeng Yin":{17:6,18:7,19:10,20:4,21:5,22:3,23:2},
+  "Manideep Reddy Chinthareddy":{17:4,18:11,19:11,21:8,22:3},
+  "Bennett Miller":{19:28,20:4},
+  "Vikas W Jaiswal":{18:7,19:4,20:5,21:2,22:8,23:2},
+  "Roman Podshivalov":{19:9,20:7,23:11},
+  "John Wang":{17:3,22:7},
   "Christopher X Walker":{19:4},
-  "Mingxin Chuai":     {17:2},
-  "Kunal T Vakil":     {18:0},
+  "Kunal T Vakil":{18:0},
+  "Sunil J Punnoose":{20:3,21:7,22:10,23:3},
+  "Srikanth Geedipalli":{20:4,22:5,23:3},
+  "Kalyana C Bedhu":{22:5,23:4},
+  "Mingxin Chuai":{17:2},
 };
 
-const WEEKDAYS = [17,18,19,20,21];
-const WEEKENDS = [22,23];
-
+const WEEKDAYS = [17,18,19,20,23], WEEKENDS = [21,22];
 function fmt(n) { return n.toLocaleString(); }
 
-// Safe DOM helper: creates an element from a tag, sets attributes/text, appends children
 function el(tag, attrs, ...children) {
   const e = document.createElement(tag);
   if (attrs) {
@@ -741,7 +859,6 @@ function el(tag, attrs, ...children) {
       if (k === 'cls') e.className = v;
       else if (k === 'text') e.textContent = v;
       else if (k === 'style') e.style.cssText = v;
-      else if (k.startsWith('data-')) e.setAttribute(k, v);
       else e.setAttribute(k, v);
     }
   }
@@ -757,241 +874,333 @@ function clearAppend(parent, ...children) {
   for (const c of children) parent.appendChild(c);
 }
 
-// ─── STAT CARDS ───
-function renderStats() {
-  const totalSessions = USERS.reduce((s,u) => s + u.sessions, 0);
-  const totalAdded = USERS.reduce((s,u) => s + u.added, 0);
-  const activeUsers = USERS.filter(u => u.sessions > 0).length;
-  const avgSessions = activeUsers > 0 ? Math.round(totalSessions / activeUsers) : 0;
+// ─── ROTATION SUMMARY ───
+function renderRotation() {
+  const rotIn = USERS.filter(u => u.recentlyAdded);
+  const rotOut = USERS.filter(u => u.rotatedOut);
 
+  function makeSvgIcon(isIn) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    // User icon parts
+    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path1.setAttribute('d', 'M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2');
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '8.5'); circle.setAttribute('cy', '7'); circle.setAttribute('r', '4');
+    const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line1.setAttribute('x1', '23'); line1.setAttribute('y1', '11'); line1.setAttribute('x2', '17'); line1.setAttribute('y2', '11');
+    svg.appendChild(path1);
+    svg.appendChild(circle);
+    svg.appendChild(line1);
+    if (isIn) {
+      const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line2.setAttribute('x1', '20'); line2.setAttribute('y1', '8'); line2.setAttribute('x2', '20'); line2.setAttribute('y2', '14');
+      svg.appendChild(line2);
+    }
+    return svg;
+  }
+
+  function makeTable(users, type) {
+    const isIn = type === 'in';
+    const card = el('div', { cls: 'rotation-card' });
+
+    const header = el('div', { cls: 'rotation-header ' + (isIn ? 'rot-in' : 'rot-out') });
+    const iconWrap = el('div', { cls: 'rot-icon' });
+    iconWrap.appendChild(makeSvgIcon(isIn));
+    header.appendChild(iconWrap);
+    header.appendChild(el('span', { cls: 'rot-title', text: isIn ? 'Rotated In' : 'Rotated Out' }));
+    header.appendChild(el('span', { cls: 'rot-count', text: String(users.length) }));
+    card.appendChild(header);
+
+    const table = el('table');
+    const thead = el('thead');
+    const headRow = el('tr');
+    headRow.appendChild(el('th', { text: 'Name' }));
+    headRow.appendChild(el('th', { cls: 'num', text: 'Status' }));
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = el('tbody');
+    for (const u of users) {
+      const tr = el('tr');
+      tr.appendChild(el('td', { cls: 'user-cell', text: u.name }));
+      const statusTd = el('td', { cls: 'num' });
+      if (isIn) {
+        const hasActivity = u.sessions > 0;
+        statusTd.appendChild(el('span', {
+          cls: 'rot-status ' + (hasActivity ? 'rot-status-active' : 'rot-status-inactive'),
+          text: hasActivity ? 'Active' : 'Inactive',
+        }));
+      } else {
+        statusTd.appendChild(el('span', { cls: 'rot-status rot-status-inactive', text: 'Removed' }));
+      }
+      tr.appendChild(statusTd);
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    card.appendChild(table);
+    return card;
+  }
+
+  const wrap = el('div', { cls: 'rotation-wrap' });
+  wrap.appendChild(makeTable(rotIn, 'in'));
+  wrap.appendChild(makeTable(rotOut, 'out'));
+  clearAppend(document.getElementById('rotationSection'), wrap);
+}
+
+// ─── STATS ───
+function renderStats() {
   const cards = [
-    { label: "Total Sessions", value: fmt(totalSessions), sub: "across 7 days" },
-    { label: "Lines Added", value: fmt(totalAdded), sub: "net code growth" },
-    { label: "Active Users", value: activeUsers + " / 29", sub: Math.round(activeUsers/29*100) + "% engagement" },
-    { label: "Avg Sessions / User", value: fmt(avgSessions), sub: "active users only" },
+    { label:"Code Sessions", value:"1,665", accent:"var(--blue-500)", iconBg:"#eff6ff", iconColor:"var(--blue-600)", icon:'<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="12" y2="5"/>' },
+    { label:"Lines Changed", value:"911,319", accent:"var(--emerald-500)", iconBg:"#ecfdf5", iconColor:"var(--emerald-600)", icon:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
+    { label:"Commits", value:"409", accent:"var(--amber-500)", iconBg:"#fffbeb", iconColor:"var(--amber-600)", icon:'<circle cx="12" cy="12" r="4"/><line x1="1.05" y1="12" x2="7" y2="12"/><line x1="17.01" y1="12" x2="22.96" y2="12"/>' },
+    { label:"Active Users", value:"24 / 33", accent:"var(--rose-500)", iconBg:"#fff1f2", iconColor:"var(--rose-600)", icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
   ];
 
-  const grid = document.getElementById('statsGrid');
-  clearAppend(grid, ...cards.map((c, i) => {
-    const card = el('div', { cls: `stat-card animate-in delay-${i+1}` },
-      el('div', { cls: 'stat-label', text: c.label }),
-      el('div', { cls: 'stat-value', text: c.value }),
-      el('div', { cls: 'stat-sub', text: c.sub })
+  clearAppend(document.getElementById('statsGrid'), ...cards.map(c => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.insertAdjacentHTML('afterbegin', c.icon);
+
+    const iconWrap = el('div', { cls: 'stat-icon-wrap', style: 'background:'+c.iconBg+';color:'+c.iconColor });
+    iconWrap.appendChild(svg);
+
+    const card = el('div', { cls: 'stat-card' },
+      el('div', { cls: 'accent-line', style: 'background:'+c.accent }),
+      el('div', { cls: 'stat-top' },
+        el('div', null,
+          el('p', { cls: 'stat-label', text: c.label }),
+          el('p', { cls: 'stat-value', text: c.value })
+        ),
+        iconWrap
+      )
     );
     return card;
   }));
 }
 
 // ─── ALERTS ───
-function makeAlertCard(type, title, users) {
-  const ul = el('ul', { cls: 'alert-users' });
-  for (const u of users) {
-    const li = el('li', null,
-      el('span', { cls: 'user-name', text: u.name }),
-      el('span', { cls: 'user-detail', text: u.detail })
-    );
-    ul.appendChild(li);
-  }
-  const card = el('div', { cls: `alert-card ${type}` },
-    el('div', { cls: 'alert-title', text: title }),
-    ul
-  );
-  return card;
-}
-
 function renderAlerts() {
   const grid = document.getElementById('alertsGrid');
+  const currentRoster = USERS.filter(u => !u.rotatedOut && !u.inactive);
+  const zero = currentRoster.filter(u => u.days === 0);
+  const veryLow = currentRoster.filter(u => u.days > 0 && u.sessions < 5);
+  const weekendOnly = currentRoster.filter(u => u.days > 0 && u.sessions > 0 && u.dates.every(d => WEEKENDS.includes(d)));
 
-  const zero = USERS.filter(u => u.days === 0).map(u => ({ name: u.name, detail: "0 sessions, 0 days" }));
-  const veryLow = USERS.filter(u => u.days > 0 && u.sessions < 5).map(u => ({
-    name: u.name, detail: u.sessions + " sess / " + u.days + " day" + (u.days > 1 ? "s" : "")
-  }));
-
-  const weekendOnly = USERS.filter(u => u.days > 0 && u.dates.every(d => WEEKENDS.includes(d))).map(u => ({
-    name: u.name, detail: u.sessions + " sess on weekends"
-  }));
-
-  const lowWeekday = USERS.filter(u => {
-    if (u.days === 0) return false;
-    const wdSessions = DAILY[u.name] || {};
-    const wdTotal = WEEKDAYS.reduce((s, d) => s + (wdSessions[d] || 0), 0);
-    return wdTotal === 0 && u.sessions > 0;
-  }).map(u => ({ name: u.name, detail: u.sessions + " sess (weekends only)" }));
+  function makeCard(cls, title, items) {
+    const stripe = el('div', { cls: 'alert-stripe', style: 'background:' + (cls === 'alert-critical' ? 'var(--rose-500)' : 'var(--amber-500)') });
+    const ul = el('ul', { cls: 'alert-list' });
+    for (const it of items) {
+      ul.appendChild(el('li', null,
+        el('span', { cls: 'name', text: it.name }),
+        el('span', { cls: 'detail', text: it.detail })
+      ));
+    }
+    const card = el('div', { cls: 'alert-card ' + cls }, stripe, el('div', { cls: 'alert-title', text: title }), ul);
+    return card;
+  }
 
   const cards = [
-    makeAlertCard('alert-critical', '\u26D4 Zero Activity', zero),
-    makeAlertCard('alert-warning', '\u26A0 Very Low Usage (< 5 sessions)', veryLow),
+    makeCard('alert-critical', 'Zero Activity', zero.map(u => ({ name: u.name, detail: '0 sessions, 0 days' }))),
+    makeCard('alert-warning', 'Very Low Usage (< 5 sessions)', veryLow.map(u => ({ name: u.name, detail: u.sessions + ' sess / ' + u.days + ' day' + (u.days > 1 ? 's' : '') }))),
   ];
   if (weekendOnly.length > 0) {
-    cards.push(makeAlertCard('alert-warning', '\uD83D\uDCC5 Weekend Only (no weekday activity)', weekendOnly));
+    cards.push(makeCard('alert-warning', 'Weekend Only \u2014 No Weekday Activity', weekendOnly.map(u => ({ name: u.name, detail: u.sessions + ' sess on weekends' }))));
   }
-  if (lowWeekday.length > 0) {
-    cards.push(makeAlertCard('alert-warning', '\uD83D\uDCC9 Zero Weekday Sessions', lowWeekday));
-  }
-
   clearAppend(grid, ...cards);
 }
 
 // ─── BAR CHART ───
 function renderBarChart() {
-  const sorted = [...USERS].sort((a,b) => b.sessions - a.sessions);
+  const sorted = [...USERS].filter(u => !u.rotatedOut).sort((a,b) => b.sessions - a.sessions);
   const max = sorted[0].sessions;
-  const container = document.getElementById('barChart');
-
-  clearAppend(container, ...sorted.map(u => {
+  clearAppend(document.getElementById('barChart'), ...sorted.map(u => {
     const pct = max > 0 ? (u.sessions / max * 100) : 0;
-    const cls = u.sessions === 0 ? 'inactive' : u.sessions < 10 ? 'low' : '';
-    const fill = el('div', { cls: 'bar-fill ' + cls, style: 'width:' + pct + '%' });
+    const cls = u.sessions === 0 ? 'fill-inactive' : u.sessions < 10 ? 'fill-low' : 'fill-normal';
     return el('div', { cls: 'bar-row' },
       el('div', { cls: 'bar-name', text: u.name }),
-      el('div', { cls: 'bar-track' }, fill),
+      el('div', { cls: 'bar-track' }, el('div', { cls: 'bar-fill ' + cls, style: 'width:' + pct + '%' })),
       el('div', { cls: 'bar-val', text: fmt(u.sessions) })
     );
   }));
 }
 
 // ─── HEATMAP ───
+const ROTATION_DAY = 19; // Thu Feb 19
+
 function renderHeatmap() {
   const days = [
-    { d: 17, label: "Mon 17", weekend: false },
-    { d: 18, label: "Tue 18", weekend: false },
-    { d: 19, label: "Wed 19", weekend: false },
-    { d: 20, label: "Thu 20", weekend: false },
-    { d: 21, label: "Fri 21", weekend: false },
-    { d: 22, label: "Sat 22", weekend: true },
-    { d: 23, label: "Sun 23", weekend: true },
+    { d:17, label:"Tue 17", we:false }, { d:18, label:"Wed 18", we:false },
+    { d:19, label:"Thu 19", we:false }, { d:20, label:"Fri 20", we:false },
+    { d:21, label:"Sat 21", we:true }, { d:22, label:"Sun 22", we:true },
+    { d:23, label:"Mon 23", we:false },
   ];
 
-  let maxSess = 0;
-  for (const vals of Object.values(DAILY)) {
-    for (const v of Object.values(vals)) {
-      if (v > maxSess) maxSess = v;
-    }
-  }
+  let maxS = 0;
+  for (const v of Object.values(DAILY)) for (const n of Object.values(v)) if (n > maxS) maxS = n;
 
   function intensity(val) {
     if (!val) return 0;
-    const ratio = val / maxSess;
-    if (ratio < 0.08) return 1;
-    if (ratio < 0.2) return 2;
-    if (ratio < 0.4) return 3;
-    if (ratio < 0.7) return 4;
-    return 5;
+    const r = val / maxS;
+    return r < 0.08 ? 1 : r < 0.2 ? 2 : r < 0.4 ? 3 : r < 0.7 ? 4 : 5;
   }
 
-  const sorted = [...USERS].sort((a,b) => b.sessions - a.sessions);
+  const continuing = USERS.filter(u => !u.rotatedOut && !u.recentlyAdded).sort((a,b) => b.sessions - a.sessions);
+  const rotIn = USERS.filter(u => u.recentlyAdded).sort((a,b) => b.sessions - a.sessions);
+  const rotOut = USERS.filter(u => u.rotatedOut).sort((a,b) => b.sessions - a.sessions);
+
   const grid = document.getElementById('heatmap');
   grid.textContent = '';
 
   // Header row
-  grid.appendChild(el('div', { cls: 'hm-header day-label' }));
-  for (const day of days) {
-    grid.appendChild(el('div', { cls: 'hm-header' + (day.weekend ? ' weekend' : ''), text: day.label }));
-  }
+  grid.appendChild(el('div', { cls: 'hm-header' }));
+  for (const d of days) grid.appendChild(el('div', { cls: 'hm-header' + (d.we ? ' weekend' : ''), text: d.label }));
 
-  // Data rows
-  for (const u of sorted) {
+  function addUserRow(u, noSeatBefore, noSeatAfter) {
     const daily = DAILY[u.name] || {};
     grid.appendChild(el('div', { cls: 'hm-name', text: u.name }));
-    for (const day of days) {
-      const val = daily[day.d] || 0;
-      const inten = u.days === 0 ? 0 : intensity(val);
-      const display = val > 0 ? String(val) : (u.dates.includes(day.d) ? '0' : '\u2013');
-      grid.appendChild(el('div', {
-        cls: 'hm-cell intensity-' + inten + (day.weekend ? ' weekend-col' : ''),
-        text: display
-      }));
+    for (const d of days) {
+      if ((noSeatBefore && d.d < ROTATION_DAY) || (noSeatAfter && d.d >= ROTATION_DAY)) {
+        grid.appendChild(el('div', { cls: 'hm-cell no-seat' }));
+      } else {
+        const val = daily[d.d] || 0;
+        const i = u.days === 0 ? 0 : intensity(val);
+        const txt = val > 0 ? String(val) : (u.dates.includes(d.d) ? '0' : '\u2013');
+        grid.appendChild(el('div', { cls: 'hm-cell i-' + i, text: txt }));
+      }
     }
   }
+
+  function addDivider(label, cls) {
+    const div = el('div', { cls: 'hm-divider ' + cls });
+    div.appendChild(el('div', { cls: 'hm-divider-line' }));
+    div.appendChild(el('span', { cls: 'hm-divider-label', text: label }));
+    div.appendChild(el('div', { cls: 'hm-divider-line' }));
+    grid.appendChild(div);
+  }
+
+  // Continuing users
+  for (const u of continuing) addUserRow(u, false, false);
+
+  // Rotated in
+  addDivider('Rotated In \u2014 Thu 19', 'hm-divider-in');
+  for (const u of rotIn) addUserRow(u, true, false);
+
+  // Rotated out
+  addDivider('Rotated Out \u2014 Thu 19', 'hm-divider-out');
+  for (const u of rotOut) addUserRow(u, false, true);
 }
 
-// ─── SCHEDULE PATTERNS ───
+// ─── SCHEDULE ───
 function renderSchedule() {
-  const both = [], weekdayOnly = [], weekendOnly = [];
-
+  const both = [], wdOnly = [], weOnly = [];
   for (const u of USERS) {
-    if (u.days === 0) continue;
-    const hasWeekday = u.dates.some(d => WEEKDAYS.includes(d));
-    const hasWeekend = u.dates.some(d => WEEKENDS.includes(d));
-    if (hasWeekday && hasWeekend) both.push(u);
-    else if (hasWeekday) weekdayOnly.push(u);
-    else weekendOnly.push(u);
+    if (u.days === 0 || u.rotatedOut) continue;
+    const wd = u.dates.some(d => WEEKDAYS.includes(d));
+    const we = u.dates.some(d => WEEKENDS.includes(d));
+    if (wd && we) both.push(u);
+    else if (wd) wdOnly.push(u);
+    else weOnly.push(u);
   }
-
-  both.sort((a,b) => b.sessions - a.sessions);
-  weekdayOnly.sort((a,b) => b.sessions - a.sessions);
-  weekendOnly.sort((a,b) => b.sessions - a.sessions);
+  [both, wdOnly, weOnly].forEach(a => a.sort((a,b) => b.sessions - a.sessions));
 
   function makeList(arr) {
-    const ul = el('ul', { cls: 'schedule-list' });
-    for (const u of arr) {
-      ul.appendChild(el('li', null,
-        el('span', { text: u.name }),
-        el('span', { cls: 'sess', text: u.sessions + ' sess' })
-      ));
-    }
+    const ul = el('ul', { cls: 'sched-list' });
+    for (const u of arr) ul.appendChild(el('li', null, el('span', { text: u.name }), el('span', { cls: 'sess', text: u.sessions + ' sess' })));
     return ul;
   }
 
-  function makeCard(title, count, arr) {
-    const h3 = el('h3', null,
-      document.createTextNode(title + ' '),
-      el('span', { cls: 'pill', text: String(count) })
-    );
+  function makeCard(title, count, pillCls, arr) {
+    const h3 = el('h3');
+    h3.appendChild(document.createTextNode(title + ' '));
+    h3.appendChild(el('span', { cls: 'pill ' + pillCls, text: String(count) }));
     return el('div', { cls: 'schedule-card' }, h3, makeList(arr));
   }
 
   clearAppend(document.getElementById('scheduleGrid'),
-    makeCard('Weekday + Weekend', both.length, both),
-    makeCard('Weekday Only', weekdayOnly.length, weekdayOnly),
-    makeCard('Weekend Only', weekendOnly.length, weekendOnly)
+    makeCard('Weekday + Weekend', both.length, 'pill-green', both),
+    makeCard('Weekday Only', wdOnly.length, 'pill-amber', wdOnly),
+    makeCard('Weekend Only', weOnly.length, 'pill-terra', weOnly)
   );
 }
 
 // ─── TABLE ───
-let sortKey = 'sessions';
-let sortDir = -1;
+let sortKey = 'sessions', sortDir = -1;
 
 function getStatus(u) {
+  if (u.rotatedOut) return 'rotated';
+  if (u.inactive) return 'new-inactive';
   if (u.days === 0) return 'inactive';
   if (u.sessions < 10) return 'low';
   return 'active';
 }
 
 function renderTable() {
-  const sorted = [...USERS].sort((a,b) => {
-    const va = a[sortKey], vb = b[sortKey];
-    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
-    return sortDir * (va - vb);
-  });
+  // Sort: active users first by sort key, then new-inactive, then rotated out
+  const regular = USERS.filter(u => !u.rotatedOut && !u.inactive);
+  const newInactive = USERS.filter(u => u.inactive && !u.rotatedOut);
+  const rotated = USERS.filter(u => u.rotatedOut);
+
+  function sortGroup(arr) {
+    return [...arr].sort((a,b) => {
+      let va, vb;
+      if (sortKey === 'lines') { va = a.added + a.removed; vb = b.added + b.removed; }
+      else { va = a[sortKey]; vb = b[sortKey]; }
+      if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+      return sortDir * (va - vb);
+    });
+  }
+
+  const sorted = [...sortGroup(regular), ...sortGroup(newInactive), ...sortGroup(rotated)];
 
   const tbody = document.getElementById('tableBody');
   tbody.textContent = '';
 
   for (const u of sorted) {
-    const status = getStatus(u);
-    const dotClass = status === 'inactive' ? 's-inactive' : status === 'low' ? 's-low' : 's-active';
-    const rowClass = status === 'inactive' ? 'row-inactive' : status === 'low' ? 'row-low' : 'row-active';
+    const st = getStatus(u);
+    const dotCls = st === 'rotated' ? 'dot-inactive' : st === 'new-inactive' ? 'dot-inactive' : st === 'inactive' ? 'dot-inactive' : st === 'low' ? 'dot-low' : 'dot-active';
+    const rowCls = st === 'rotated' ? 'row-rotated' : st === 'new-inactive' ? 'row-new-inactive' : st === 'inactive' ? 'row-inactive' : st === 'low' ? 'row-low' : '';
 
-    const tr = el('tr', { cls: rowClass });
-    const tdName = el('td', { cls: 'user-cell' },
-      el('span', { cls: 'status-dot ' + dotClass }),
-      document.createTextNode(u.name)
-    );
+    const tr = el('tr', { cls: rowCls });
+    const tdName = el('td', { cls: 'user-cell' }, el('span', { cls: 'status-dot ' + dotCls }));
+    tdName.appendChild(document.createTextNode(u.name));
+    if (u.recentlyAdded) tdName.appendChild(el('span', { cls: 'user-badge badge-new', text: 'New' }));
+    if (u.inactive) tdName.appendChild(el('span', { cls: 'user-badge badge-inactive', text: 'Inactive' }));
+    if (u.rotatedOut) tdName.appendChild(el('span', { cls: 'user-badge badge-rotated', text: 'Rotated Out' }));
     tr.appendChild(tdName);
-    tr.appendChild(el('td', { cls: 'num', text: String(u.days) }));
-    tr.appendChild(el('td', { cls: 'num', text: fmt(u.sessions) }));
-    tr.appendChild(el('td', { cls: 'num', text: fmt(u.added) }));
-    tr.appendChild(el('td', { cls: 'num', text: fmt(u.removed) }));
-    tr.appendChild(el('td', { cls: 'num', text: String(u.commits) }));
+
+    const dash = '\u2014';
+    const dimmed = u.rotatedOut || u.inactive;
+    tr.appendChild(el('td', { cls: 'num', text: dimmed && u.days === 0 ? dash : String(u.days) }));
+    tr.appendChild(el('td', { cls: 'num', text: dimmed && u.sessions === 0 ? dash : fmt(u.sessions) }));
+
+    if (dimmed && u.added === 0 && u.removed === 0) {
+      tr.appendChild(el('td', { cls: 'num', text: dash }));
+    } else {
+      const tdLines = el('td', { cls: 'num' },
+        el('span', { cls: 'lines-added', text: '+' + fmt(u.added) }),
+        el('span', { cls: 'lines-sep', text: '/' }),
+        el('span', { cls: 'lines-removed', text: '-' + fmt(u.removed) })
+      );
+      tr.appendChild(tdLines);
+    }
+    tr.appendChild(el('td', { cls: 'num', text: dimmed && u.commits === 0 ? dash : String(u.commits) }));
     tbody.appendChild(tr);
   }
 
   document.querySelectorAll('#userTable th').forEach(th => {
     th.classList.remove('sorted-asc', 'sorted-desc');
-    if (th.dataset.key === sortKey) {
-      th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
-    }
+    if (th.dataset.key === sortKey) th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
   });
 }
 
@@ -1004,7 +1213,7 @@ document.querySelectorAll('#userTable th').forEach(th => {
   });
 });
 
-// ─── INIT ───
+renderRotation();
 renderStats();
 renderAlerts();
 renderBarChart();
@@ -1012,6 +1221,5 @@ renderHeatmap();
 renderSchedule();
 renderTable();
 </script>
-
 </body>
 </html>
