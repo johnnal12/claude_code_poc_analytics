@@ -1,9 +1,9 @@
-name: Fetch Data & Deploy
+name: Deploy to GitHub Pages
 
 on:
-  schedule:
-    - cron: '0 6 * * *' # Daily at 06:00 UTC
-  workflow_dispatch: # Manual trigger
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -29,11 +29,6 @@ jobs:
           cache: npm
 
       - run: npm ci
-
-      - name: Fetch analytics data
-        run: node scripts/fetch-data.mjs
-        env:
-          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
 
       - run: npm run build
 
