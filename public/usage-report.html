@@ -1146,7 +1146,8 @@ let sortKey = 'sessions', sortDir = -1;
 function getStatus(u) {
   if (u.rotatedOut) return 'rotated';
   if (u.inactive) return 'new-inactive';
-  if (u.days === 0 && !u.recentlyAdded) return 'inactive';
+  if (u.recentlyAdded) return 'active';
+  if (u.days === 0) return 'inactive';
   if (u.sessions < 10) return 'low';
   return 'active';
 }
