@@ -812,9 +812,9 @@ const USERS = [
   // Recently added (joined after reporting period)
   { name:"Kiran Ramineni", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true },
   { name:"Thomas Jacob", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true },
-  { name:"Gopinath Durgaiyanaidu", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true },
-  { name:"Jeffrey Kadans", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true },
-  { name:"Ali Bagherpour", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true },
+  { name:"Gopinath Durgaiyanaidu", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true, inactive:true },
+  { name:"Jeffrey Kadans", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true, inactive:true },
+  { name:"Ali Bagherpour", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], recentlyAdded:true, addedAfterPeriod:true, inactive:true },
   // Rotated out
   { name:"Mingxin Chuai", days:1, sessions:2, added:0, removed:0, commits:0, dates:[17], rotatedOut:true },
   { name:"Vijay Viswanathan", days:0, sessions:0, added:0, removed:0, commits:0, dates:[], rotatedOut:true },
@@ -1146,7 +1146,7 @@ let sortKey = 'sessions', sortDir = -1;
 function getStatus(u) {
   if (u.rotatedOut) return 'rotated';
   if (u.inactive) return 'new-inactive';
-  if (u.days === 0) return 'inactive';
+  if (u.days === 0 && !u.recentlyAdded) return 'inactive';
   if (u.sessions < 10) return 'low';
   return 'active';
 }
