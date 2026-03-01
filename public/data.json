@@ -1,38 +1,10 @@
 {
-  "fetchedAt": "2026-02-27T12:34:30.940Z",
+  "fetchedAt": "2026-03-01T13:33:26.715Z",
   "dateRange": {
-    "start": "2026-01-26",
-    "end": "2026-02-24"
+    "start": "2026-01-28",
+    "end": "2026-02-27"
   },
   "daily": [
-    {
-      "date": "2026-01-26",
-      "sessions": 0,
-      "linesAdded": 0,
-      "linesRemoved": 0,
-      "commits": 0,
-      "pullRequests": 0,
-      "conversations": 0,
-      "messages": 0,
-      "webSearches": 0,
-      "toolAccepted": 0,
-      "toolRejected": 0,
-      "activeUsers": 0
-    },
-    {
-      "date": "2026-01-27",
-      "sessions": 0,
-      "linesAdded": 0,
-      "linesRemoved": 0,
-      "commits": 0,
-      "pullRequests": 0,
-      "conversations": 0,
-      "messages": 0,
-      "webSearches": 0,
-      "toolAccepted": 0,
-      "toolRejected": 0,
-      "activeUsers": 0
-    },
     {
       "date": "2026-01-28",
       "sessions": 0,
@@ -423,57 +395,85 @@
       "webSearches": 256,
       "toolAccepted": 1631,
       "toolRejected": 1,
+      "activeUsers": 13
+    },
+    {
+      "date": "2026-02-25",
+      "sessions": 330,
+      "linesAdded": 97964,
+      "linesRemoved": 16713,
+      "commits": 109,
+      "pullRequests": 0,
+      "conversations": 4,
+      "messages": 16,
+      "webSearches": 124,
+      "toolAccepted": 1992,
+      "toolRejected": 2,
+      "activeUsers": 16
+    },
+    {
+      "date": "2026-02-26",
+      "sessions": 217,
+      "linesAdded": 106106,
+      "linesRemoved": 9841,
+      "commits": 66,
+      "pullRequests": 0,
+      "conversations": 4,
+      "messages": 13,
+      "webSearches": 120,
+      "toolAccepted": 1473,
+      "toolRejected": 0,
       "activeUsers": 14
     }
   ],
   "users": [
     {
+      "name": "John Albesa",
+      "sessions": 941,
+      "linesAdded": 245237,
+      "linesRemoved": 29399,
+      "commits": 142,
+      "pullRequests": 0,
+      "conversations": 16,
+      "messages": 69,
+      "webSearches": 496,
+      "acceptanceRate": 99.89866234292664
+    },
+    {
       "name": "Duc X Nguyen",
-      "sessions": 156,
-      "linesAdded": 222407,
-      "linesRemoved": 4760,
+      "sessions": 185,
+      "linesAdded": 238709,
+      "linesRemoved": 4842,
       "commits": 1,
       "pullRequests": 0,
       "conversations": 1,
       "messages": 1,
-      "webSearches": 223,
+      "webSearches": 249,
       "acceptanceRate": 100
     },
     {
-      "name": "John Albesa",
-      "sessions": 813,
-      "linesAdded": 197299,
-      "linesRemoved": 26515,
-      "commits": 98,
-      "pullRequests": 0,
-      "conversations": 15,
-      "messages": 64,
-      "webSearches": 458,
-      "acceptanceRate": 99.87972095261006
-    },
-    {
-      "name": "Eve Freeman",
-      "sessions": 313,
-      "linesAdded": 130176,
-      "linesRemoved": 22165,
-      "commits": 198,
+      "name": "Jacob Meador",
+      "sessions": 443,
+      "linesAdded": 158241,
+      "linesRemoved": 30749,
+      "commits": 123,
       "pullRequests": 0,
       "conversations": 0,
       "messages": 0,
-      "webSearches": 148,
-      "acceptanceRate": 99.97217584863661
+      "webSearches": 446,
+      "acceptanceRate": 100
     },
     {
-      "name": "Emmett X York",
-      "sessions": 87,
-      "linesAdded": 99111,
-      "linesRemoved": 2256,
-      "commits": 0,
+      "name": "Eve Freeman",
+      "sessions": 337,
+      "linesAdded": 134461,
+      "linesRemoved": 24964,
+      "commits": 211,
       "pullRequests": 0,
-      "conversations": 10,
-      "messages": 21,
-      "webSearches": 70,
-      "acceptanceRate": 99.88290398126463
+      "conversations": 0,
+      "messages": 0,
+      "webSearches": 156,
+      "acceptanceRate": 99.97395833333333
     },
     {
       "name": "Dinesh Kumar Vivekanandhan",
@@ -488,94 +488,58 @@
       "acceptanceRate": 99.24698795180723
     },
     {
-      "name": "Jacob Meador",
-      "sessions": 329,
-      "linesAdded": 87695,
-      "linesRemoved": 22134,
-      "commits": 68,
-      "pullRequests": 0,
-      "conversations": 0,
-      "messages": 0,
-      "webSearches": 375,
-      "acceptanceRate": 100
-    },
-    {
-      "name": "Charles A Smith",
-      "sessions": 84,
-      "linesAdded": 83064,
-      "linesRemoved": 3010,
-      "commits": 2,
-      "pullRequests": 0,
-      "conversations": 4,
-      "messages": 5,
-      "webSearches": 48,
-      "acceptanceRate": 100
-    },
-    {
       "name": "Bojan Mihovilovic",
-      "sessions": 248,
-      "linesAdded": 78103,
-      "linesRemoved": 16241,
-      "commits": 187,
+      "sessions": 277,
+      "linesAdded": 83887,
+      "linesRemoved": 18544,
+      "commits": 205,
       "pullRequests": 0,
       "conversations": 2,
       "messages": 3,
-      "webSearches": 130,
+      "webSearches": 171,
       "acceptanceRate": 100
     },
     {
       "name": "Stephen C Schwartz",
-      "sessions": 105,
-      "linesAdded": 60151,
-      "linesRemoved": 5611,
+      "sessions": 121,
+      "linesAdded": 63270,
+      "linesRemoved": 5649,
       "commits": 12,
       "pullRequests": 0,
       "conversations": 0,
       "messages": 0,
-      "webSearches": 225,
-      "acceptanceRate": 100
-    },
-    {
-      "name": "Vivek Ojha",
-      "sessions": 99,
-      "linesAdded": 58246,
-      "linesRemoved": 3425,
-      "commits": 0,
-      "pullRequests": 0,
-      "conversations": 2,
-      "messages": 4,
-      "webSearches": 0,
+      "webSearches": 233,
       "acceptanceRate": 100
     },
     {
       "name": "Seyedmeysam Abolghasemi",
-      "sessions": 130,
-      "linesAdded": 46981,
-      "linesRemoved": 6440,
-      "commits": 16,
+      "sessions": 158,
+      "linesAdded": 55461,
+      "linesRemoved": 7363,
+      "commits": 19,
       "pullRequests": 0,
       "conversations": 2,
       "messages": 2,
-      "webSearches": 15,
+      "webSearches": 25,
       "acceptanceRate": 100
     },
     {
       "name": "Moeen Rana",
-      "sessions": 75,
-      "linesAdded": 37048,
-      "linesRemoved": 2463,
+      "sessions": 85,
+      "linesAdded": 38287,
+      "linesRemoved": 2468,
       "commits": 0,
       "pullRequests": 0,
       "conversations": 3,
       "messages": 3,
-      "webSearches": 12,
+      "webSearches": 27,
       "acceptanceRate": 100
     },
     {
       "name": "Guopeng Yin",
-      "sessions": 84,
-      "linesAdded": 27350,
-      "linesRemoved": 3613,
+      "sessions": 92,
+      "linesAdded": 27580,
+      "linesRemoved": 3971,
       "commits": 0,
       "pullRequests": 0,
       "conversations": 0,
@@ -596,6 +560,18 @@
       "acceptanceRate": 100
     },
     {
+      "name": "Sunil J Punnoose",
+      "sessions": 46,
+      "linesAdded": 17450,
+      "linesRemoved": 4806,
+      "commits": 21,
+      "pullRequests": 0,
+      "conversations": 3,
+      "messages": 3,
+      "webSearches": 6,
+      "acceptanceRate": 100
+    },
+    {
       "name": "Feng X Hou",
       "sessions": 217,
       "linesAdded": 17319,
@@ -608,15 +584,15 @@
       "acceptanceRate": 99.30313588850174
     },
     {
-      "name": "Sunil J Punnoose",
-      "sessions": 33,
-      "linesAdded": 16423,
-      "linesRemoved": 3827,
-      "commits": 16,
+      "name": "Tushar X Gupta",
+      "sessions": 66,
+      "linesAdded": 15983,
+      "linesRemoved": 1781,
+      "commits": 31,
       "pullRequests": 0,
-      "conversations": 3,
-      "messages": 3,
-      "webSearches": 0,
+      "conversations": 2,
+      "messages": 2,
+      "webSearches": 61,
       "acceptanceRate": 100
     },
     {
@@ -632,27 +608,39 @@
       "acceptanceRate": 100
     },
     {
-      "name": "Tushar X Gupta",
-      "sessions": 54,
-      "linesAdded": 10600,
-      "linesRemoved": 1109,
-      "commits": 29,
-      "pullRequests": 0,
-      "conversations": 1,
-      "messages": 1,
-      "webSearches": 61,
-      "acceptanceRate": 100
-    },
-    {
       "name": "Kalyana C Bedhu",
-      "sessions": 9,
-      "linesAdded": 9177,
-      "linesRemoved": 2215,
+      "sessions": 19,
+      "linesAdded": 13569,
+      "linesRemoved": 2634,
       "commits": 0,
       "pullRequests": 0,
       "conversations": 1,
       "messages": 1,
       "webSearches": 0,
+      "acceptanceRate": 100
+    },
+    {
+      "name": "Roman Podshivalov",
+      "sessions": 49,
+      "linesAdded": 10797,
+      "linesRemoved": 3844,
+      "commits": 27,
+      "pullRequests": 0,
+      "conversations": 1,
+      "messages": 1,
+      "webSearches": 12,
+      "acceptanceRate": 100
+    },
+    {
+      "name": "Vikas W Jaiswal",
+      "sessions": 61,
+      "linesAdded": 9007,
+      "linesRemoved": 951,
+      "commits": 1,
+      "pullRequests": 0,
+      "conversations": 4,
+      "messages": 9,
+      "webSearches": 9,
       "acceptanceRate": 100
     },
     {
@@ -668,11 +656,11 @@
       "acceptanceRate": 100
     },
     {
-      "name": "Roman Podshivalov",
-      "sessions": 38,
-      "linesAdded": 7747,
-      "linesRemoved": 1781,
-      "commits": 22,
+      "name": "Angel Rexlin X Russelian",
+      "sessions": 3,
+      "linesAdded": 2675,
+      "linesRemoved": 47,
+      "commits": 0,
       "pullRequests": 0,
       "conversations": 1,
       "messages": 1,
@@ -680,40 +668,28 @@
       "acceptanceRate": 100
     },
     {
-      "name": "Sivashankar Gnanasegaran",
-      "sessions": 9,
-      "linesAdded": 4529,
-      "linesRemoved": 0,
+      "name": "Sherdil Khawaja",
+      "sessions": 0,
+      "linesAdded": 1429,
+      "linesRemoved": 101,
       "commits": 0,
       "pullRequests": 0,
-      "conversations": 1,
-      "messages": 4,
-      "webSearches": 5,
-      "acceptanceRate": 100
-    },
-    {
-      "name": "Vikas W Jaiswal",
-      "sessions": 28,
-      "linesAdded": 1674,
-      "linesRemoved": 343,
-      "commits": 0,
-      "pullRequests": 0,
-      "conversations": 4,
+      "conversations": 2,
       "messages": 9,
       "webSearches": 0,
       "acceptanceRate": 100
     },
     {
-      "name": "Qiuhua Zheng",
-      "sessions": 3,
-      "linesAdded": 1375,
-      "linesRemoved": 0,
+      "name": "Akbar Sheak",
+      "sessions": 6,
+      "linesAdded": 646,
+      "linesRemoved": 126,
       "commits": 0,
       "pullRequests": 0,
-      "conversations": 2,
-      "messages": 2,
+      "conversations": 1,
+      "messages": 7,
       "webSearches": 0,
-      "acceptanceRate": 100
+      "acceptanceRate": 89.47368421052632
     },
     {
       "name": "Vinay K Vangala",
@@ -752,18 +728,6 @@
       "acceptanceRate": 100
     },
     {
-      "name": "Sherdil Khawaja",
-      "sessions": 0,
-      "linesAdded": 256,
-      "linesRemoved": 0,
-      "commits": 0,
-      "pullRequests": 0,
-      "conversations": 1,
-      "messages": 2,
-      "webSearches": 0,
-      "acceptanceRate": 100
-    },
-    {
       "name": "Mingxin Chuai",
       "sessions": 2,
       "linesAdded": 0,
@@ -776,7 +740,7 @@
       "acceptanceRate": 0
     },
     {
-      "name": "Kunal T Vakil",
+      "name": "Vijay Viswanathan",
       "sessions": 0,
       "linesAdded": 0,
       "linesRemoved": 0,
@@ -786,17 +750,29 @@
       "messages": 1,
       "webSearches": 0,
       "acceptanceRate": 0
+    },
+    {
+      "name": "Kiran Ramineni",
+      "sessions": 0,
+      "linesAdded": 0,
+      "linesRemoved": 0,
+      "commits": 0,
+      "pullRequests": 0,
+      "conversations": 1,
+      "messages": 2,
+      "webSearches": 0,
+      "acceptanceRate": 0
     }
   ],
   "tools": [
     {
       "tool": "Edit",
-      "accepted": 15519,
-      "rejected": 14
+      "accepted": 17552,
+      "rejected": 16
     },
     {
       "tool": "Write",
-      "accepted": 7742,
+      "accepted": 9174,
       "rejected": 2
     },
     {
@@ -977,6 +953,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 24,
+        "linesAdded": 5290,
+        "linesRemoved": 538,
+        "commits": 20,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 104,
+        "linesAdded": 42648,
+        "linesRemoved": 2346,
+        "commits": 24,
+        "conversations": 1,
+        "messages": 5,
+        "webSearches": 38
       }
     ],
     "Bojan Mihovilovic": [
@@ -1109,97 +1105,25 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 10
-      }
-    ],
-    "Charles A Smith": [
-      {
-        "date": "2026-02-12",
-        "sessions": 0,
-        "linesAdded": 8685,
-        "linesRemoved": 95,
-        "commits": 0,
-        "conversations": 2,
-        "messages": 2,
-        "webSearches": 0
       },
       {
-        "date": "2026-02-15",
-        "sessions": 5,
-        "linesAdded": 7291,
-        "linesRemoved": 7,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-16",
-        "sessions": 4,
-        "linesAdded": 867,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-17",
-        "sessions": 3,
-        "linesAdded": 632,
-        "linesRemoved": 3,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-18",
-        "sessions": 17,
-        "linesAdded": 14098,
-        "linesRemoved": 1192,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 18
-      },
-      {
-        "date": "2026-02-19",
-        "sessions": 8,
-        "linesAdded": 2262,
-        "linesRemoved": 267,
-        "commits": 2,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-20",
+        "date": "2026-02-25",
         "sessions": 25,
-        "linesAdded": 21081,
-        "linesRemoved": 394,
+        "linesAdded": 5773,
+        "linesRemoved": 2294,
+        "commits": 18,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 41
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 4,
+        "linesAdded": 11,
+        "linesRemoved": 9,
         "commits": 0,
         "conversations": 0,
         "messages": 0,
-        "webSearches": 30
-      },
-      {
-        "date": "2026-02-21",
-        "sessions": 8,
-        "linesAdded": 21861,
-        "linesRemoved": 868,
-        "commits": 0,
-        "conversations": 1,
-        "messages": 2,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-22",
-        "sessions": 14,
-        "linesAdded": 6287,
-        "linesRemoved": 184,
-        "commits": 0,
-        "conversations": 1,
-        "messages": 1,
         "webSearches": 0
       }
     ],
@@ -1437,108 +1361,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
-      }
-    ],
-    "Emmett X York": [
-      {
-        "date": "2026-02-12",
-        "sessions": 0,
-        "linesAdded": 0,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 2,
-        "messages": 2,
-        "webSearches": 0
       },
       {
-        "date": "2026-02-13",
-        "sessions": 13,
-        "linesAdded": 30274,
-        "linesRemoved": 480,
-        "commits": 0,
-        "conversations": 1,
-        "messages": 4,
-        "webSearches": 4
-      },
-      {
-        "date": "2026-02-14",
-        "sessions": 6,
-        "linesAdded": 8278,
-        "linesRemoved": 217,
+        "date": "2026-02-25",
+        "sessions": 15,
+        "linesAdded": 11501,
+        "linesRemoved": 40,
         "commits": 0,
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
       },
       {
-        "date": "2026-02-15",
-        "sessions": 17,
-        "linesAdded": 13526,
-        "linesRemoved": 37,
-        "commits": 0,
-        "conversations": 1,
-        "messages": 2,
-        "webSearches": 27
-      },
-      {
-        "date": "2026-02-16",
-        "sessions": 8,
-        "linesAdded": 8346,
-        "linesRemoved": 18,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 9
-      },
-      {
-        "date": "2026-02-18",
+        "date": "2026-02-26",
         "sessions": 14,
-        "linesAdded": 16227,
-        "linesRemoved": 132,
-        "commits": 0,
-        "conversations": 3,
-        "messages": 10,
-        "webSearches": 30
-      },
-      {
-        "date": "2026-02-19",
-        "sessions": 9,
-        "linesAdded": 3793,
-        "linesRemoved": 192,
-        "commits": 0,
-        "conversations": 1,
-        "messages": 1,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-20",
-        "sessions": 3,
-        "linesAdded": 3212,
-        "linesRemoved": 110,
-        "commits": 0,
-        "conversations": 2,
-        "messages": 2,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-21",
-        "sessions": 7,
-        "linesAdded": 3141,
-        "linesRemoved": 15,
+        "linesAdded": 4801,
+        "linesRemoved": 42,
         "commits": 0,
         "conversations": 0,
         "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-22",
-        "sessions": 10,
-        "linesAdded": 12314,
-        "linesRemoved": 1055,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
+        "webSearches": 26
       }
     ],
     "Feng X Hou": [
@@ -1763,6 +1605,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 7,
+        "linesAdded": 230,
+        "linesRemoved": 358,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 1,
+        "linesAdded": 0,
+        "linesRemoved": 0,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
       }
     ],
     "Jacob Meador": [
@@ -1895,6 +1757,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 221
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 79,
+        "linesAdded": 24015,
+        "linesRemoved": 4956,
+        "commits": 26,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 41
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 35,
+        "linesAdded": 46531,
+        "linesRemoved": 3659,
+        "commits": 29,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 30
       }
     ],
     "John Wang": [
@@ -2153,28 +2035,16 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
-      }
-    ],
-    "Qiuhua Zheng": [
-      {
-        "date": "2026-02-12",
-        "sessions": 0,
-        "linesAdded": 26,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 2,
-        "messages": 2,
-        "webSearches": 0
       },
       {
-        "date": "2026-02-16",
-        "sessions": 3,
-        "linesAdded": 1349,
-        "linesRemoved": 0,
+        "date": "2026-02-25",
+        "sessions": 10,
+        "linesAdded": 1239,
+        "linesRemoved": 5,
         "commits": 0,
         "conversations": 0,
         "messages": 0,
-        "webSearches": 0
+        "webSearches": 15
       }
     ],
     "Roman Podshivalov": [
@@ -2227,38 +2097,16 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
-      }
-    ],
-    "Sivashankar Gnanasegaran": [
-      {
-        "date": "2026-02-12",
-        "sessions": 0,
-        "linesAdded": 0,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 1,
-        "messages": 4,
-        "webSearches": 0
       },
       {
-        "date": "2026-02-15",
-        "sessions": 3,
-        "linesAdded": 0,
-        "linesRemoved": 0,
-        "commits": 0,
+        "date": "2026-02-26",
+        "sessions": 11,
+        "linesAdded": 3050,
+        "linesRemoved": 2063,
+        "commits": 5,
         "conversations": 0,
         "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-16",
-        "sessions": 6,
-        "linesAdded": 4529,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 5
+        "webSearches": 12
       }
     ],
     "Sujit Das": [
@@ -2271,6 +2119,18 @@
         "conversations": 3,
         "messages": 3,
         "webSearches": 1
+      }
+    ],
+    "Vijay Viswanathan": [
+      {
+        "date": "2026-02-12",
+        "sessions": 0,
+        "linesAdded": 0,
+        "linesRemoved": 0,
+        "commits": 0,
+        "conversations": 1,
+        "messages": 1,
+        "webSearches": 0
       }
     ],
     "Vinay K Vangala": [
@@ -2298,78 +2158,6 @@
         "date": "2026-02-15",
         "sessions": 3,
         "linesAdded": 508,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      }
-    ],
-    "Vivek Ojha": [
-      {
-        "date": "2026-02-12",
-        "sessions": 0,
-        "linesAdded": 0,
-        "linesRemoved": 0,
-        "commits": 0,
-        "conversations": 2,
-        "messages": 4,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-13",
-        "sessions": 27,
-        "linesAdded": 17303,
-        "linesRemoved": 411,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-14",
-        "sessions": 3,
-        "linesAdded": 13687,
-        "linesRemoved": 75,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-17",
-        "sessions": 34,
-        "linesAdded": 8515,
-        "linesRemoved": 1363,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-18",
-        "sessions": 21,
-        "linesAdded": 16083,
-        "linesRemoved": 1135,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-19",
-        "sessions": 10,
-        "linesAdded": 2144,
-        "linesRemoved": 441,
-        "commits": 0,
-        "conversations": 0,
-        "messages": 0,
-        "webSearches": 0
-      },
-      {
-        "date": "2026-02-20",
-        "sessions": 4,
-        "linesAdded": 514,
         "linesRemoved": 0,
         "commits": 0,
         "conversations": 0,
@@ -2549,6 +2337,16 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 24,
+        "linesAdded": 4285,
+        "linesRemoved": 2799,
+        "commits": 13,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 8
       }
     ],
     "Seyedmeysam Abolghasemi": [
@@ -2651,6 +2449,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 17,
+        "linesAdded": 7406,
+        "linesRemoved": 258,
+        "commits": 1,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 10
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 11,
+        "linesAdded": 1074,
+        "linesRemoved": 665,
+        "commits": 2,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
       }
     ],
     "Stephen C Schwartz": [
@@ -2743,6 +2561,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 3
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 7,
+        "linesAdded": 121,
+        "linesRemoved": 37,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 9,
+        "linesAdded": 2998,
+        "linesRemoved": 1,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 8
       }
     ],
     "Tushar X Gupta": [
@@ -2815,17 +2653,25 @@
         "conversations": 1,
         "messages": 1,
         "webSearches": 22
-      }
-    ],
-    "Kunal T Vakil": [
+      },
       {
-        "date": "2026-02-18",
-        "sessions": 0,
-        "linesAdded": 0,
-        "linesRemoved": 0,
-        "commits": 0,
+        "date": "2026-02-25",
+        "sessions": 4,
+        "linesAdded": 4667,
+        "linesRemoved": 668,
+        "commits": 1,
         "conversations": 1,
         "messages": 1,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 8,
+        "linesAdded": 716,
+        "linesRemoved": 4,
+        "commits": 1,
+        "conversations": 0,
+        "messages": 0,
         "webSearches": 0
       }
     ],
@@ -2889,6 +2735,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 30,
+        "linesAdded": 7154,
+        "linesRemoved": 583,
+        "commits": 1,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 9
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 3,
+        "linesAdded": 179,
+        "linesRemoved": 25,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
       }
     ],
     "Sunil J Punnoose": [
@@ -2941,6 +2807,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 6,
+        "linesAdded": 7,
+        "linesRemoved": 4,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 7,
+        "linesAdded": 1020,
+        "linesRemoved": 975,
+        "commits": 5,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 6
       }
     ],
     "Kalyana C Bedhu": [
@@ -2963,6 +2849,26 @@
         "conversations": 0,
         "messages": 0,
         "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 7,
+        "linesAdded": 2940,
+        "linesRemoved": 395,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 3,
+        "linesAdded": 1452,
+        "linesRemoved": 24,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
       }
     ],
     "Sherdil Khawaja": [
@@ -2970,6 +2876,62 @@
         "date": "2026-02-24",
         "sessions": 0,
         "linesAdded": 256,
+        "linesRemoved": 0,
+        "commits": 0,
+        "conversations": 1,
+        "messages": 2,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-25",
+        "sessions": 0,
+        "linesAdded": 1173,
+        "linesRemoved": 101,
+        "commits": 0,
+        "conversations": 1,
+        "messages": 7,
+        "webSearches": 0
+      }
+    ],
+    "Akbar Sheak": [
+      {
+        "date": "2026-02-25",
+        "sessions": 6,
+        "linesAdded": 646,
+        "linesRemoved": 126,
+        "commits": 0,
+        "conversations": 1,
+        "messages": 7,
+        "webSearches": 0
+      }
+    ],
+    "Angel Rexlin X Russelian": [
+      {
+        "date": "2026-02-25",
+        "sessions": 0,
+        "linesAdded": 1049,
+        "linesRemoved": 19,
+        "commits": 0,
+        "conversations": 1,
+        "messages": 1,
+        "webSearches": 0
+      },
+      {
+        "date": "2026-02-26",
+        "sessions": 3,
+        "linesAdded": 1626,
+        "linesRemoved": 28,
+        "commits": 0,
+        "conversations": 0,
+        "messages": 0,
+        "webSearches": 0
+      }
+    ],
+    "Kiran Ramineni": [
+      {
+        "date": "2026-02-26",
+        "sessions": 0,
+        "linesAdded": 0,
         "linesRemoved": 0,
         "commits": 0,
         "conversations": 1,
