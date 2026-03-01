@@ -21,7 +21,13 @@ function mtdPrefix(): string {
 function sliceByRange<T extends { date: string }>(all: T[], range: TimeRange): T[] {
   if (range === 'mtd') {
     const prefix = mtdPrefix()
-    return all.filter((d) => d.date >= prefix)
+    const mtd = all.filter((d) => d.date >= prefix)
+    if (mtd.length > 0) return mtd
+    // No data for current month yet (API delay) — fall back to previous month
+    const now = new Date()
+    const prev = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+    const prevPrefix = `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-`
+    return all.filter((d) => d.date.startsWith(prevPrefix))
   }
   return all.slice(-rangeDays[range])
 }
@@ -56,7 +62,7 @@ interface AnalyticsState {
 }
 
 export const useAnalyticsStore = create<AnalyticsState>()((set, get) => ({
-  range: 'mtd',
+  range: '30d',
   loading: false,
   error: null,
   daily: [],
